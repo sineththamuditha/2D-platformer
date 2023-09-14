@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://o1mviek0dnjf"]
+
+[ext_resource type="Script" path="res://GlobalAssets/Scripts/health_label.gd" id="1_u13ty"]
+
+[node name="health_label" type="RichTextLabel"]
+offset_right = 80.0
+offset_bottom = 29.0
+text = "100-"
+tab_size = 8
+script = ExtResource("1_u13ty")
+
+[node name="health_timer" type="Timer" parent="."]
+wait_time = 0.8
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="health_timer" to="." method="_on_health_timer_timeout"]

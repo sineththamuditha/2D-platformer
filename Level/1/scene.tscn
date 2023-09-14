@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpbmd5bjr7iev"]
+
+[ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="2_kpwvr"]
+[ext_resource type="PackedScene" uid="uid://boxllo0pi4pj8" path="res://GlobalAssets/UI/health_manager.tscn" id="3_w45pc"]
+[ext_resource type="PackedScene" uid="uid://pvrjvo5t6vwx" path="res://GlobalAssets/Enemies/Lich Mage/lich.tscn" id="4_upvu1"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lmbig"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqvfs"]
+size = Vector2(1389, 74.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d7fmx"]
+size = Vector2(1068.5, 74.5)
+
+[node name="Scene" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_lmbig")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(125.5, 510)
+shape = SubResource("RectangleShape2D_gqvfs")
+
+[node name="Panel" type="Panel" parent="StaticBody2D/CollisionShape2D"]
+offset_left = -691.0
+offset_top = -36.0
+offset_right = 695.0
+offset_bottom = 11.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1435.25, 375)
+shape = SubResource("RectangleShape2D_d7fmx")
+
+[node name="Panel" type="Panel" parent="StaticBody2D/CollisionShape2D2"]
+offset_left = -526.0
+offset_top = -39.0
+offset_right = 530.0
+offset_bottom = 8.0
+
+[node name="Player" parent="." instance=ExtResource("2_kpwvr")]
+position = Vector2(71, 401)
+
+[node name="health_manager" parent="." instance=ExtResource("3_w45pc")]
+offset_left = 404.0
+offset_top = 435.0
+offset_right = 404.0
+offset_bottom = 435.0
+
+[node name="Lich" parent="." instance=ExtResource("4_upvu1")]
+position = Vector2(-473, 407)

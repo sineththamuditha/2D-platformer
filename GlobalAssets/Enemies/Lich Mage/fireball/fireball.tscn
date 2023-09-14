@@ -1,0 +1,166 @@
+[gd_scene load_steps=13 format=3 uid="uid://bthgkc8eucv8s"]
+
+[ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/fireball/scripts/travel.gd" id="1_dmyf7"]
+[ext_resource type="Texture2D" uid="uid://db4isd5jcjfvp" path="res://GlobalAssets/Enemies/Lich Mage/fireball/animations/fire.png" id="1_sndag"]
+[ext_resource type="Texture2D" uid="uid://ds6nv5i7x2nyd" path="res://GlobalAssets/Enemies/Lich Mage/fireball/animations/fire_trail.png" id="2_ccioo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6fig3"]
+atlas = ExtResource("2_ccioo")
+region = Rect2(0, 0, 66, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xl52n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6fig3")
+}],
+"loop": true,
+"name": &"trail",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_faw6r"]
+atlas = ExtResource("1_sndag")
+region = Rect2(0, 0, 45, 23)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8gwdv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_faw6r")
+}],
+"loop": true,
+"name": &"firing",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_1m6kl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fireball_sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fireball_trail:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2jva3"]
+resource_name = "travel"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("fireball_sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"firing"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("fireball_sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 0, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("fireball_trail:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"trail"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("fireball_trail:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 0, 0, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eanus"]
+_data = {
+"RESET": SubResource("Animation_1m6kl"),
+"travel": SubResource("Animation_2jva3")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8idnc"]
+radius = 7.0
+height = 42.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_latnt"]
+
+[node name="fireball" type="StaticBody2D"]
+script = ExtResource("1_dmyf7")
+
+[node name="fireball_trail" type="AnimatedSprite2D" parent="."]
+position = Vector2(-24, 0)
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_xl52n")
+animation = &"trail"
+
+[node name="fireball_sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_8gwdv")
+animation = &"firing"
+
+[node name="animation_player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eanus")
+}
+
+[node name="fireball_collision" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="collision_body" type="CollisionShape2D" parent="fireball_collision"]
+position = Vector2(-8, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_8idnc")
+
+[node name="fireball_body" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_latnt")
+disabled = true
+metadata/_edit_lock_ = true
+
+[node name="fire_ball_timer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="body_entered" from="fireball_collision" to="." method="_on_fireball_collision_body_entered"]
+[connection signal="timeout" from="fire_ball_timer" to="." method="_on_fire_ball_timer_timeout"]
