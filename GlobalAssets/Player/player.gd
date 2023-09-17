@@ -2,22 +2,32 @@ extends CharacterBody2D
 
 class_name Player
 
-const SPEED = 300.0
+const SPEED = 200.0
 const JUMP_VELOCITY = -400.0
 
 @onready var animated_sprite : AnimatedSprite2D = $player_animation_sprite
 @onready var animation_tree : AnimationTree = $animation_tree
 @onready var player_state_machine : PlayerStateMachine = $player_state_machine
+@onready var ground_state : GroundState = $player_state_machine/ground
+@onready var player_damageable : PlayerDamageable = $player_damageable
 
 @export var crouch_state : CrouchState
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction : Vector2 = Vector2.ZERO
+var last_checkpoint : Vector2
+var checkpoint_manager : CheckpointManager
 
 signal facing_direction_changed(facing_right : bool)
 
 func _ready():
 	animation_tree.active = true
+	last_checkpoint = position
+	
+	var check_point_manager = get_parent().get_node("checkpoint_manager")
+	
+	if is_instance_valid(checkpoint_manager) :
+		checkpoint_manager.connect("change_checkpoint", change_checkpoint)
 
 
 func _physics_process(delta):
@@ -31,7 +41,10 @@ func _physics_process(delta):
 		velocity.x = direction.x * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+	
+	if position.y > 1000 :
+		reset_ground_position()
+	
 	move_and_slide()
 	update_animation()
 	update_facing_direction()
@@ -47,3 +60,9 @@ func update_facing_direction():
 		
 	emit_signal("facing_direction_changed", !animated_sprite.flip_h)
 
+func reset_ground_position() :
+	position = last_checkpoint
+	player_damageable.take_damage( 10, Vector2.ZERO)
+
+func change_checkpoint(new_checkpoint) :
+	last_checkpoint = new_checkpoint 

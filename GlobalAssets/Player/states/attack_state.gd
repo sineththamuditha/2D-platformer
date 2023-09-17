@@ -21,7 +21,7 @@ enum ATTACKCHAIN {
 }
 var attack_chain : ATTACKCHAIN
 
-func state_process(delta):
+func state_process(_delta):
 	if on_air and player.is_on_floor():
 		playback.travel("attack_from_air_end")
 

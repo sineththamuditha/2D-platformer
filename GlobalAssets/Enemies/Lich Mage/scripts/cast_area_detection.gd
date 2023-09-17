@@ -1,5 +1,7 @@
 extends Area2D
 
+class_name CastDetection
+
 signal switch_to_cast(player : Player)
 signal switch_to_chase(player : Player)
 

@@ -8,15 +8,16 @@ const JUMP_VELOCITY = -400.0
 
 var player : CharacterBody2D
 var playback : AnimationNodeStateMachinePlayback
-var next_state : State
-var previous_state : State
+
+@onready var next_state : State = null
+@onready var previous_state : State = null
 
 signal interrupt_state(new_state : State)
 
-func state_process(delta):
+func state_process(_delta):
 	pass
 
-func state_input(event : InputEvent):
+func state_input(_event : InputEvent):
 	pass
 
 func on_exit():

@@ -35,6 +35,7 @@ func switch_states(next_state : State):
 	if (current_state != null):
 		current_state.on_exit()
 		current_state.next_state = null
+		next_state.previous_state = current_state
 	
 	current_state = next_state
 	
@@ -44,5 +45,4 @@ func _input(event : InputEvent):
 	current_state.state_input(event)
 
 func handle_interrupt(new_state : State):
-	new_state.previous_state = current_state
 	switch_states(new_state)

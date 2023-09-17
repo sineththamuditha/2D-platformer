@@ -1032,6 +1032,10 @@ anim_player = NodePath("../animation_player")
 [node name="damagable" type="Node" parent="."]
 script = ExtResource("9_qr17e")
 
+[node name="damage_timer" type="Timer" parent="damagable"]
+wait_time = 2.0
+one_shot = true
+
 [node name="ghoul_state_machine" type="Node" parent="." node_paths=PackedStringArray("player", "animation_tree", "current_state")]
 script = ExtResource("10_2hwn5")
 player = NodePath("..")

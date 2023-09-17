@@ -12,4 +12,5 @@ func _on_body_entered(body):
 
 func _on_body_exited(body):
 	if (body is Player):
+		print(body.name + " exited " + self.get_parent().name + " detection")
 		emit_signal("stop_chasing", body)

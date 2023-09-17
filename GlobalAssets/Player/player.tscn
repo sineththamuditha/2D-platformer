@@ -1,4 +1,4 @@
-[gd_scene load_steps=182 format=3 uid="uid://cwfxasetk3hbq"]
+[gd_scene load_steps=183 format=3 uid="uid://cwfxasetk3hbq"]
 
 [ext_resource type="Script" path="res://GlobalAssets/Player/player.gd" id="1_fqa1t"]
 [ext_resource type="Texture2D" uid="uid://cqs2setggsteu" path="res://GlobalAssets/Player/animations/idle.png" id="1_ybm01"]
@@ -13,11 +13,12 @@
 [ext_resource type="Texture2D" uid="uid://2d5g5mq26uk0" path="res://GlobalAssets/Player/animations/hurt.png" id="6_sdcc2"]
 [ext_resource type="Texture2D" uid="uid://cuxxiyi1hrs3r" path="res://GlobalAssets/Player/animations/slide.png" id="7_k6aci"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/sword.gd" id="13_4aho7"]
-[ext_resource type="Script" path="res://GlobalAssets/Player/states/player_state_machine.gd" id="13_ir8ub"]
+[ext_resource type="Script" path="res://GlobalAssets/Player/scripts/player_camera.gd" id="13_5aw11"]
 [ext_resource type="Script" path="res://GlobalAssets/Scripts/flip_attack_boxes.gd" id="14_iwuw4"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/states/ground_state.gd" id="14_mmer7"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/states/air_state.gd" id="15_grt7i"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/states/attack_state.gd" id="16_4xbgn"]
+[ext_resource type="Script" path="res://GlobalAssets/Scripts/player_state_machine.gd" id="16_pvtw4"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/crouch_state.gd" id="18_e2j11"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/state_debug.gd" id="19_dpjks"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/states/hurt_state.gd" id="20_yhgqx"]
@@ -1724,7 +1725,7 @@ states/death/position = Vector2(697.65, 101.377)
 states/jump/node = SubResource("AnimationNodeAnimation_sdhly")
 states/jump/position = Vector2(360.488, 118.433)
 transitions = ["attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_3alf8"), "attack_2", "attack_3", SubResource("AnimationNodeStateMachineTransition_kode7"), "attack_3", "attack_4", SubResource("AnimationNodeStateMachineTransition_wvngi"), "jump", "attack_from_air", SubResource("AnimationNodeStateMachineTransition_bayhw"), "attack_from_air", "attack_from_air_end", SubResource("AnimationNodeStateMachineTransition_s8ylv"), "jump", "double jump", SubResource("AnimationNodeStateMachineTransition_uvdhf"), "double jump", "attack_from_air", SubResource("AnimationNodeStateMachineTransition_08ih5"), "Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_s3stl"), "jump", "idle and move", SubResource("AnimationNodeStateMachineTransition_icfvu"), "idle and move", "jump", SubResource("AnimationNodeStateMachineTransition_csy4m"), "double jump", "idle and move", SubResource("AnimationNodeStateMachineTransition_dr57j"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_eg71e"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_x3r8u"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_v4txr"), "attack_3", "idle and move", SubResource("AnimationNodeStateMachineTransition_1018c"), "attack_4", "idle and move", SubResource("AnimationNodeStateMachineTransition_0mjcj"), "attack_from_air_end", "idle and move", SubResource("AnimationNodeStateMachineTransition_1qn8c"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_xqb36"), "crouch_attack_1", "crouch_attack_2", SubResource("AnimationNodeStateMachineTransition_17l0v"), "idle and move", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_xolk5"), "crouch_idle", "idle and move", SubResource("AnimationNodeStateMachineTransition_g1kq3"), "crouch_idle", "crouch_attack_1", SubResource("AnimationNodeStateMachineTransition_x2ljp"), "crouch_attack_1", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_cj6vb"), "crouch_attack_2", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_w1l52")]
-graph_offset = Vector2(103.755, 169.366)
+graph_offset = Vector2(209.355, 97.0285)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l1jw"]
 radius = 16.5
@@ -1760,6 +1761,7 @@ radius = 35.0143
 radius = 26.1725
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("crouch_state")]
+z_index = 1
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_fqa1t")
@@ -1769,12 +1771,17 @@ crouch_state = NodePath("player_state_machine/crouch")
 position = Vector2(-3, 6)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_n3bb0")
-animation = &"crouch_attack_2"
+animation = &"death"
 speed_scale = 0.5
 offset = Vector2(2.08165e-12, 2.08165e-12)
 
 [node name="player_camera" type="Camera2D" parent="."]
 zoom = Vector2(1.4, 1.4)
+limit_left = 0
+limit_top = 0
+limit_right = 8000
+limit_bottom = 720
+script = ExtResource("13_5aw11")
 
 [node name="player_animation_player" type="AnimationPlayer" parent="."]
 reset_on_save = false
@@ -1791,17 +1798,18 @@ parameters/crouch_idle/blend_position = 0.00123918
 [node name="player_hurt_box" type="CollisionShape2D" parent="."]
 position = Vector2(0, 23)
 shape = SubResource("CapsuleShape2D_8l1jw")
-disabled = true
 
 [node name="crouch_hurt_box" type="CollisionShape2D" parent="."]
 position = Vector2(0, 30)
 shape = SubResource("CapsuleShape2D_p5f0a")
+disabled = true
 
 [node name="player_sprite" type="Sprite2D" parent="."]
 
 [node name="sword" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 collision_layer = 0
 collision_mask = 4
+monitoring = false
 script = ExtResource("13_4aho7")
 player = NodePath("..")
 
@@ -1858,6 +1866,7 @@ metadata/_edit_lock_ = true
 visible = false
 position = Vector2(28, 34)
 shape = SubResource("CircleShape2D_0j7vm")
+disabled = true
 script = ExtResource("14_iwuw4")
 metadata/_edit_lock_ = true
 
@@ -1865,11 +1874,12 @@ metadata/_edit_lock_ = true
 visible = false
 position = Vector2(37, 42)
 shape = SubResource("CircleShape2D_35ho6")
+disabled = true
 script = ExtResource("14_iwuw4")
 metadata/_edit_lock_ = true
 
 [node name="player_state_machine" type="Node" parent="." node_paths=PackedStringArray("player", "animation_tree", "current_state")]
-script = ExtResource("13_ir8ub")
+script = ExtResource("16_pvtw4")
 player = NodePath("..")
 animation_tree = NodePath("../animation_tree")
 current_state = NodePath("ground")
@@ -1927,7 +1937,13 @@ player_damageable = NodePath("../player_damageable")
 
 [node name="player_damageable" type="Node" parent="."]
 script = ExtResource("21_4f5m2")
+health = 100
+
+[node name="damage_timer" type="Timer" parent="player_damageable"]
+wait_time = 0.5
+one_shot = true
 
 [connection signal="animation_finished" from="animation_tree" to="player_state_machine/attack" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="player_state_machine/crouch" method="_on_animation_tree_animation_finished"]
+[connection signal="animation_finished" from="animation_tree" to="player_damageable" method="_on_animation_tree_animation_finished"]
 [connection signal="body_entered" from="sword" to="sword" method="_on_body_entered"]

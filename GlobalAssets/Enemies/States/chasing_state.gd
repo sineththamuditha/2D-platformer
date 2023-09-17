@@ -13,20 +13,22 @@ func _ready():
 	detection_area.connect("stop_chasing", stop_chasing)
 	attack_detection.connect("attack_player", attack_player)
 
-func state_process(delta):
+func state_process(_delta):
 	pass
 
-func stop_chasing(player : Player):
+func stop_chasing(_player : Player):
 	next_state = idle_state
 
 func get_direction():
+	if !is_instance_valid(chasing_character) :
+		emit_signal("interrupt_state", idle_state)
+		return
 	var direction = ((chasing_character.position - player.position).normalized())
 	if (direction.x > 0 ):
 		return Vector2.RIGHT
 	else:
 		return Vector2.LEFT
 
-func attack_player(player : Player):
+func attack_player(_player : Player):
 	emit_signal("interrupt_state", attack_state)
-	#attack_state.attacking_character = player
-	playback.travel("attack_1")
+	#attack_state.attacking_character = _player

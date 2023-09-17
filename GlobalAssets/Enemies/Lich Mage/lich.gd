@@ -29,7 +29,7 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 		
 	if lich_state_machine.current_state is ChasingState or lich_state_machine.current_state is LichAttackState:
-		direction =lich_state_machine.current_state.get_direction()
+		direction = lich_state_machine.current_state.get_direction()
 	else:
 		direction = Vector2.ZERO
 		
@@ -53,21 +53,9 @@ func update_facing_direction():
 	
 	emit_signal("facing_direction_change", !animated_sprite.flip_h)
 
-func get_hit(node : Node, damage : int, direction : Vector2):
+func get_hit(_node : Node, _damage : int, _direction : Vector2):
 	if damageable.health > 0 :
 		self.velocity = knockback * direction
 
 	else:
 		lich_state_machine.current_state.emit_signal("interrupt_state", death_state)
-
-
-@onready var test_timer : Timer = $test_timer
-
-
-
-#func _on_test_timer_timeout():
-	#print(lich_state_machine.current_state)
-	#if lich_state_machine.current_state is LichAttackState :
-		#print(lich_state_machine.current_state.attack_animation)
-		#print(animation_tree["parameters/playback"].get_current_node())
-

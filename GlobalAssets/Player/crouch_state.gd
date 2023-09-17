@@ -9,7 +9,7 @@ class_name CrouchState
 
 signal crouch_finished()
 
-func state_process(delta):
+func state_process(_delta):
 	if crouch_timer.is_stopped():
 		can_move = true
 

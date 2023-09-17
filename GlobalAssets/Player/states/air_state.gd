@@ -9,7 +9,7 @@ const DOUBLE_JUMP_VELOCITY = -400.0
 
 var has_double_jump : bool = false
 
-func state_process(delta):
+func state_process(_delta):
 	if(player.is_on_floor()):
 		next_state = ground_state 
 

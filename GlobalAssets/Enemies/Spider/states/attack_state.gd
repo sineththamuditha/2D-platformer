@@ -2,6 +2,7 @@ extends State
 
 @export var chasing_state : ChasingState
 @export var attack_detection : AttackDetection 
+@export var chase_detection : DetectionArea
 
 @onready var attack_timer : Timer = $attack_timer
 var near_player : bool = false
@@ -12,10 +13,13 @@ func _ready():
 
 func on_enter():
 	near_player = true
-	attack_timer.start()
-	attack_animation = 0
+	chase_detection.monitoring = false
+	
+func on_exit() :
+	print(attack_animation)
+	chase_detection.monitoring = true
 
-func stop_attacking(player : Player):
+func stop_attacking(_player : Player):
 	near_player = false
 
 func state_process(_delta):
@@ -23,11 +27,10 @@ func state_process(_delta):
 		attack()
 
 func _on_animation_tree_animation_finished(_anim_name):
-	if !near_player :
-		next_state = chasing_state
+	if not near_player :
+		next_state = previous_state
 		playback.travel("idle and move")
-	else :
-		attack_animation = (attack_animation + 1) % 2
+		
 	
 
 func attack():
@@ -38,4 +41,5 @@ func attack():
 		1:
 			playback.travel("attack_2")
 	
+	attack_animation = (attack_animation + 1) % 2
 	attack_timer.start()

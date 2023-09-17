@@ -10,7 +10,7 @@ func _ready():
 	imp.connect("facing_direction_change", change_attack_boxes)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	pass
 
 func change_attack_boxes(facing_right : bool):

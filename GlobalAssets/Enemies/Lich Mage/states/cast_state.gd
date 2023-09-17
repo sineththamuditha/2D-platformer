@@ -13,10 +13,12 @@ class_name CastState
 
 var cast_animation : int 
 var player_near : bool
+var lich_sprite : AnimatedSprite2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	cast_area_detection.connect("switch_to_cast", switch_to_cast_state)
 	cast_area_detection.connect("switch_to_chase", switch_to_chase_state)
+	lich_sprite = lich.get_child(0)
 
 
 func on_enter():
@@ -27,10 +29,10 @@ func state_process(_delta):
 	if cast_timer.is_stopped() :
 		cast_a_fireball()
 
-func switch_to_cast_state(player : Player):
+func switch_to_cast_state(_player : Player):
 	emit_signal("interrupt_state", self)
 	
-func switch_to_chase_state(player : Player):
+func switch_to_chase_state(_player : Player):
 	player_near = false
 
 func cast_a_fireball() :
@@ -47,7 +49,12 @@ func cast_a_fireball() :
 func send_a_fireball() :
 	var fire_ball : StaticBody2D = fire_ball_scene.instantiate()
 	lich.get_parent().add_child(fire_ball)
-	fire_ball.position = lich.position + Vector2(90,-25)
+	
+	if lich_sprite.flip_h :
+		fire_ball.flip()
+		fire_ball.position = lich.position + Vector2(-90,-25)
+	else :
+		fire_ball.position = lich.position + Vector2(90,-25)
 
 
 func _on_fireball_timer_timeout():

@@ -739,17 +739,17 @@ states/get_hit/position = Vector2(469.945, 234.212)
 states/look_around/node = SubResource("AnimationNodeAnimation_eicvn")
 states/look_around/position = Vector2(675.22, 161.063)
 transitions = ["Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_8q8qs"), "idle and move", "get_hit", SubResource("AnimationNodeStateMachineTransition_vp33w"), "get_hit", "idle and move", SubResource("AnimationNodeStateMachineTransition_8npiy"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_ttj05"), "look_around", "idle and move", SubResource("AnimationNodeStateMachineTransition_awhhs"), "idle and move", "look_around", SubResource("AnimationNodeStateMachineTransition_xddmg"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_vmc4d"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_7jqe8"), "attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_e1n4i"), "attack_2", "attack_1", SubResource("AnimationNodeStateMachineTransition_jy7b7"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_kq1v6")]
-graph_offset = Vector2(96.84, -125.925)
+graph_offset = Vector2(48.42, -122.948)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bitv4"]
 radius = 16.0
 height = 102.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ukcg7"]
-size = Vector2(148.03, 42.5)
+size = Vector2(148.03, 60.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_odrbs"]
-size = Vector2(734, 68)
+size = Vector2(734, 102)
 
 [node name="spider" type="CharacterBody2D"]
 collision_layer = 4
@@ -799,18 +799,16 @@ collision_mask = 2
 script = ExtResource("8_5tndw")
 
 [node name="attack_detection" type="CollisionShape2D" parent="attack_detection"]
-position = Vector2(0, 10.25)
+position = Vector2(0, 1.25)
 shape = SubResource("RectangleShape2D_ukcg7")
 metadata/_edit_lock_ = true
 
 [node name="detection_area" type="Area2D" parent="."]
-visible = false
 collision_mask = 2
 script = ExtResource("8_dr4p4")
 
 [node name="detection_area" type="CollisionShape2D" parent="detection_area"]
-visible = false
-position = Vector2(0, -3)
+position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_odrbs")
 metadata/_edit_lock_ = true
 
@@ -836,12 +834,15 @@ idle_state = NodePath("../idle_state")
 attack_state = NodePath("../attack_state")
 attack_detection = NodePath("../../attack_detection")
 
-[node name="attack_state" type="Node" parent="spider_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection")]
+[node name="attack_state" type="Node" parent="spider_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection", "chase_detection")]
 script = ExtResource("13_agk1i")
 chasing_state = NodePath("../chasing_state")
 attack_detection = NodePath("../../attack_detection")
+chase_detection = NodePath("../../detection_area")
+can_move = false
 
 [node name="attack_timer" type="Timer" parent="spider_state_machine/attack_state"]
+wait_time = 2.0
 one_shot = true
 
 [node name="hit_state" type="Node" parent="spider_state_machine" node_paths=PackedStringArray("damageable", "death_state", "ground_state", "chase_state")]
@@ -850,15 +851,20 @@ damageable = NodePath("../../Damageable")
 death_state = NodePath("../death_state")
 ground_state = NodePath("../idle_state")
 chase_state = NodePath("../chasing_state")
+can_move = false
 
 [node name="hit_timer" type="Timer" parent="spider_state_machine/hit_state"]
-wait_time = 0.3
+one_shot = true
 
 [node name="death_state" type="Node" parent="spider_state_machine"]
 script = ExtResource("16_bpnh3")
 
 [node name="Damageable" type="Node" parent="."]
 script = ExtResource("17_dfd2b")
+
+[node name="damage_timer" type="Timer" parent="Damageable"]
+wait_time = 2.0
+one_shot = true
 
 [connection signal="animation_finished" from="animation_tree" to="spider_state_machine/attack_state" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="Damageable" method="_on_animation_tree_animation_finished"]

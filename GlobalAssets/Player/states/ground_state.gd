@@ -12,7 +12,7 @@ class_name GroundState
 func _ready():
 	damageable.connect("on_hit", get_hit)
 
-func state_process(delta):
+func state_process(_delta):
 	if(!player.is_on_floor() and ground_timer.is_stopped()):
 		next_state = air_state 
 
@@ -43,7 +43,7 @@ func crouch():
 	next_state = crouch_state
 	playback.travel("crouch_idle")
 
-func get_hit(player : Node, damage : int, direction : Vector2):
+func get_hit(_player : Node, _damage : int, _direction : Vector2):
 	if damageable.health > 0 :
 		pass
 		

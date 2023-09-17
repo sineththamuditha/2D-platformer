@@ -14,10 +14,10 @@ class_name HitState
 func _ready():
 	damageable.connect("on_hit", get_hit)
 
-func _process(delta):
+func _process(_delta):
 	pass
 
-func get_hit(node : Node, damage : int, direction : Vector2):
+func get_hit(_node : Node, _damage : int, direction : Vector2):
 	if damageable.health > 0 :
 		player.velocity = knockback * direction
 		emit_signal("interrupt_state", self)

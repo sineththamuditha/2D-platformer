@@ -3,7 +3,7 @@ extends Damageable
 class_name PlayerDamageable
 
 func _ready():
-	health = 50
+	health = 100
 
 func take_damage(damage : int, direction : Vector2):
 	health -= damage

@@ -633,7 +633,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("attack_area/FacingCollisionShape2:disabled")
+tracks/1/path = NodePath("attack_area/attack_2:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -657,7 +657,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("attack_area/FacingCollisionShape:disabled")
+tracks/3/path = NodePath("attack_area/attack_1:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -709,7 +709,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("attack_area/FacingCollisionShape:disabled")
+tracks/3/path = NodePath("attack_area/attack_1:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -749,7 +749,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("attack_area/FacingCollisionShape2:disabled")
+tracks/2/path = NodePath("attack_area/attack_2:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -954,13 +954,14 @@ states/get_hit/position = Vector2(416.617, 203.702)
 "states/idle and move/node" = SubResource("AnimationNodeBlendSpace1D_qdgad")
 "states/idle and move/position" = Vector2(414.5, 98.125)
 transitions = ["Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_cnx05"), "idle and move", "get_hit", SubResource("AnimationNodeStateMachineTransition_4k4sd"), "get_hit", "idle and move", SubResource("AnimationNodeStateMachineTransition_4qeol"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_ulwqs"), "attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_wnppk"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_mm1os"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_3y504"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_lswm3")]
-graph_offset = Vector2(-0.000122258, -68.5201)
+graph_offset = Vector2(184.8, -32.7901)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kurie"]
-size = Vector2(51, 71)
+size = Vector2(58.5, 71)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_8yh16"]
-radius = 32.0156
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ksf3s"]
+radius = 18.0
+height = 60.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gfqb4"]
 radius = 14.0
@@ -977,7 +978,7 @@ script = ExtResource("1_38f7w")
 position = Vector2(-5, -6)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_mnvc4")
-animation = &"death"
+animation = &"attack_1"
 frame = 1
 
 [node name="hit_box" type="CollisionShape2D" parent="."]
@@ -1000,13 +1001,16 @@ anim_player = NodePath("../imp_animation_player")
 script = ExtResource("4_r5deq")
 health = 8
 
+[node name="damage_timer" type="Timer" parent="Damageable"]
+wait_time = 2.0
+one_shot = true
+
 [node name="attack_detection" type="Area2D" parent="."]
-visible = false
 collision_mask = 2
 script = ExtResource("13_72lfk")
 
 [node name="attack_area" type="CollisionShape2D" parent="attack_detection"]
-position = Vector2(0, -1)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_kurie")
 
 [node name="attack_area" type="Area2D" parent="." node_paths=PackedStringArray("imp")]
@@ -1017,14 +1021,15 @@ script = ExtResource("9_u6a58")
 imp = NodePath("..")
 metadata/_edit_lock_ = true
 
-[node name="FacingCollisionShape" type="CollisionShape2D" parent="attack_area"]
-position = Vector2(-1, -21)
-shape = SubResource("CircleShape2D_8yh16")
+[node name="attack_1" type="CollisionShape2D" parent="attack_area"]
+position = Vector2(13, -6)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ksf3s")
 disabled = true
 script = ExtResource("8_g8ao7")
 metadata/_edit_lock_ = true
 
-[node name="FacingCollisionShape2" type="CollisionShape2D" parent="attack_area"]
+[node name="attack_2" type="CollisionShape2D" parent="attack_area"]
 position = Vector2(12, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_gfqb4")
@@ -1072,11 +1077,14 @@ one_shot = true
 
 [node name="dead_state" type="Node" parent="imp_state_machine"]
 script = ExtResource("15_hgsk1")
+can_move = false
 
-[node name="attack_state" type="Node" parent="imp_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection")]
+[node name="attack_state" type="Node" parent="imp_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection", "detection_area")]
 script = ExtResource("16_2yko5")
 chasing_state = NodePath("../chasing_state")
 attack_detection = NodePath("../../attack_detection")
+detection_area = NodePath("../../detection_area")
+can_move = false
 
 [node name="attack_timer" type="Timer" parent="imp_state_machine/attack_state"]
 one_shot = true
