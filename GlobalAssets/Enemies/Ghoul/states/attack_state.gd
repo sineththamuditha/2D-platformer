@@ -17,14 +17,14 @@ func on_enter():
 	attack_timer.start()
 	attack_animation = 0
 
-func stop_attacking(player : Player):
+func stop_attacking(_player : Player):
 	near_player = false
 
-func state_process(delta):
+func state_process(_delta):
 	if attack_timer.is_stopped():
 		attack()
 
-func _on_animation_tree_animation_finished(anim_name):
+func _on_animation_tree_animation_finished(_anim_name):
 	if !near_player :
 		next_state = chasing_state
 		playback.travel("idle and move")

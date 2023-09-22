@@ -1002,7 +1002,7 @@ radius = 34.9285
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcl2h"]
 size = Vector2(144, 155.5)
 
-[node name="Ghoul" type="CharacterBody2D"]
+[node name="ghoul" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_i63bn")
 
@@ -1010,7 +1010,7 @@ script = ExtResource("1_i63bn")
 position = Vector2(9, -2)
 scale = Vector2(0.871094, 0.878906)
 sprite_frames = SubResource("SpriteFrames_mx7dw")
-animation = &"get_hit"
+animation = &"idle"
 frame = 1
 metadata/_edit_lock_ = true
 

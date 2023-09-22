@@ -1,6 +1,7 @@
 extends Node2D
 
-const camera_right_limit = 6900
+
+const camera_right_limit = 8000
 const camera_bottom_limit = 720
 
 @onready var player : Player = $Player
@@ -13,7 +14,7 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_pressed("next") and is_player_at_endpoint :
-		get_tree().change_scene_to_file("res://Level/2/scene.tscn")
+		get_tree().change_scene_to_file("res://Level/3/scene.tscn")
 
 func _on_endpoint_body_entered(_body):
 	is_player_at_endpoint = true
@@ -24,3 +25,4 @@ func _on_endpoint_body_entered(_body):
 func _on_endpoint_body_exited(_body):
 	is_player_at_endpoint = false
 	print("Player exited endpoint")
+ 

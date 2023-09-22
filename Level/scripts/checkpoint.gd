@@ -7,4 +7,8 @@ class_name  Checkpoint
 signal player_entered(body : Player, checkponit_priority : int)
 
 func _on_body_entered(body):
-	emit_signal("player_entered", body, checkpoint_priority)
+	if body is Player :
+		emit_signal("player_entered", body, checkpoint_priority)
+
+
+

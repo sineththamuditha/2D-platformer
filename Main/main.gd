@@ -5,4 +5,4 @@ func _on_quit_button_down():
 
 
 func _on_play_button_down():
-	get_tree().change_scene_to_file("res://Level/2/scene.tscn");
+	get_tree().change_scene_to_file("res://Level/1/scene.tscn");

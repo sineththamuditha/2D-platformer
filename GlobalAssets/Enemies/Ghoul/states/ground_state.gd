@@ -6,6 +6,6 @@ extends State
 func _ready():
 	detection_area.connect("chase_player", switch_to_chase)
 	
-func switch_to_chase(player : Player):
+func switch_to_chase(_player : Player):
 	next_state = chasing_state
 	chasing_state.chasing_character = player

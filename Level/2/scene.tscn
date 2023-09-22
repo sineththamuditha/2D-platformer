@@ -1,9 +1,20 @@
-[gd_scene load_steps=14 format=3 uid="uid://6c4uins1efhr"]
+[gd_scene load_steps=28 format=3 uid="uid://6c4uins1efhr"]
 
+[ext_resource type="Script" path="res://Level/2/scripts/scene.gd" id="1_7g3ow"]
 [ext_resource type="Texture2D" uid="uid://cylrs31wi64cv" path="res://Level/2/tile/tileset.png" id="1_cjq5r"]
 [ext_resource type="Texture2D" uid="uid://dh3syo06jw2mq" path="res://Level/2/background/background.png" id="2_dtqbf"]
 [ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="3_fqodv"]
 [ext_resource type="Texture2D" uid="uid://bdyyrf5plv8tg" path="res://Level/2/props/underworld_door.png" id="4_5meo2"]
+[ext_resource type="PackedScene" uid="uid://boxllo0pi4pj8" path="res://GlobalAssets/UI/health_manager.tscn" id="5_o4i5m"]
+[ext_resource type="Script" path="res://Level/scripts/checkpoint_manager.gd" id="6_80abh"]
+[ext_resource type="Script" path="res://Level/scripts/checkpoint.gd" id="7_jwm1w"]
+[ext_resource type="PackedScene" uid="uid://bot324ym6cyi6" path="res://GlobalAssets/Enemies/Spider/spider.tscn" id="8_m4tsu"]
+[ext_resource type="PackedScene" uid="uid://db3q75p4ug8vm" path="res://GlobalAssets/Enemies/Golem/golem.tscn" id="9_wguay"]
+[ext_resource type="PackedScene" uid="uid://f3s7vqxwvxxg" path="res://GlobalAssets/Enemies/Ghoul/ghoul.tscn" id="10_le8hc"]
+[ext_resource type="Script" path="res://Level/2/scripts/enemy_spawn.gd" id="11_1s8vu"]
+[ext_resource type="PackedScene" uid="uid://bt07rjwjfo2xy" path="res://GlobalAssets/Collectibles/Health Potion/health_potion.tscn" id="12_0ru3w"]
+[ext_resource type="PackedScene" uid="uid://dfu87n5qkypu0" path="res://GlobalAssets/Enemies/Imp/imp.tscn" id="13_x0ami"]
+[ext_resource type="Script" path="res://Level/2/scripts/final_spawn.gd" id="14_tq6qb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qbugi"]
 texture = ExtResource("1_cjq5r")
@@ -820,7 +831,60 @@ sources/2 = SubResource("TileSetAtlasSource_c57t6")
 radius = 86.0
 height = 238.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cgi2i"]
+size = Vector2(65.5, 205)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ta5s"]
+size = Vector2(58, 174)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mdqt"]
+size = Vector2(109, 173.532)
+
 [node name="Scene" type="Node2D"]
+script = ExtResource("1_7g3ow")
+
+[node name="Player" parent="." instance=ExtResource("3_fqodv")]
+position = Vector2(7198, 634)
+
+[node name="enemies" type="Node" parent="."]
+
+[node name="spider#1" parent="enemies" instance=ExtResource("8_m4tsu")]
+position = Vector2(918, 366)
+
+[node name="spider#2" parent="enemies" instance=ExtResource("8_m4tsu")]
+position = Vector2(1317, 360)
+
+[node name="ghoul#1" parent="enemies" instance=ExtResource("10_le8hc")]
+position = Vector2(2922, 495)
+
+[node name="ghoul#2" parent="enemies" instance=ExtResource("10_le8hc")]
+position = Vector2(3224, 488)
+
+[node name="ghoul#3" parent="enemies" instance=ExtResource("10_le8hc")]
+position = Vector2(3454, 491)
+
+[node name="ghoul#4" parent="enemies" instance=ExtResource("10_le8hc")]
+position = Vector2(5827, 274)
+
+[node name="ghoul#5" parent="enemies" instance=ExtResource("10_le8hc")]
+position = Vector2(6029, 274)
+
+[node name="golem#1" parent="enemies" instance=ExtResource("9_wguay")]
+position = Vector2(4325, 474)
+
+[node name="imp#1" parent="enemies" instance=ExtResource("13_x0ami")]
+position = Vector2(6046, 585)
+
+[node name="imp#2" parent="enemies" instance=ExtResource("13_x0ami")]
+position = Vector2(6165, 582)
+
+[node name="collectibles" type="Node" parent="."]
+
+[node name="health_potion#1" parent="collectibles" instance=ExtResource("12_0ru3w")]
+position = Vector2(5728, 645)
+
+[node name="health_potion#2" parent="collectibles" instance=ExtResource("12_0ru3w")]
+position = Vector2(7728, 675)
 
 [node name="roof" type="Node" parent="."]
 
@@ -865,15 +929,57 @@ metadata/_edit_lock_ = true
 
 [node name="props" type="Node" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_fqodv")]
-position = Vector2(5580, 581)
+[node name="endpoint" type="Area2D" parent="."]
 
-[node name="door_area" type="Area2D" parent="."]
-
-[node name="door_collision" type="CollisionShape2D" parent="door_area"]
+[node name="collision" type="CollisionShape2D" parent="endpoint"]
 position = Vector2(7856, 653)
 shape = SubResource("CapsuleShape2D_3dl5p")
 
-[node name="door" type="Sprite2D" parent="door_area"]
+[node name="door" type="Sprite2D" parent="endpoint"]
 position = Vector2(7856, 628)
 texture = ExtResource("4_5meo2")
+
+[node name="health_manager" parent="." instance=ExtResource("5_o4i5m")]
+
+[node name="checkpoint_manager" type="Node" parent="."]
+script = ExtResource("6_80abh")
+
+[node name="checkpoint_1" type="Area2D" parent="checkpoint_manager"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("7_jwm1w")
+checkpoint_priority = 1
+
+[node name="checkpoint" type="CollisionShape2D" parent="checkpoint_manager/checkpoint_1"]
+position = Vector2(4445, 464)
+shape = SubResource("RectangleShape2D_cgi2i")
+
+[node name="enemy_spawn" type="Node" parent="."]
+
+[node name="golem_spawn" type="Area2D" parent="enemy_spawn" node_paths=PackedStringArray("enemies")]
+collision_mask = 2
+script = ExtResource("11_1s8vu")
+golem = ExtResource("9_wguay")
+enemies = NodePath("../../enemies")
+
+[node name="collision" type="CollisionShape2D" parent="enemy_spawn/golem_spawn"]
+position = Vector2(5366, 579)
+shape = SubResource("RectangleShape2D_6ta5s")
+
+[node name="final_spawn" type="Area2D" parent="enemy_spawn" node_paths=PackedStringArray("enemies")]
+collision_mask = 2
+script = ExtResource("14_tq6qb")
+golem = ExtResource("9_wguay")
+ghoul = ExtResource("10_le8hc")
+spider = ExtResource("8_m4tsu")
+enemies = NodePath("../../enemies")
+
+[node name="collision" type="CollisionShape2D" parent="enemy_spawn/final_spawn"]
+position = Vector2(7357.5, 614.766)
+shape = SubResource("RectangleShape2D_0mdqt")
+
+[connection signal="body_entered" from="endpoint" to="." method="_on_endpoint_body_entered"]
+[connection signal="body_exited" from="endpoint" to="." method="_on_endpoint_body_exited"]
+[connection signal="body_entered" from="checkpoint_manager/checkpoint_1" to="checkpoint_manager/checkpoint_1" method="_on_body_entered"]
+[connection signal="body_entered" from="enemy_spawn/golem_spawn" to="enemy_spawn/golem_spawn" method="_on_body_entered"]
+[connection signal="body_entered" from="enemy_spawn/final_spawn" to="enemy_spawn/final_spawn" method="_on_body_entered"]

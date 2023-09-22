@@ -10,6 +10,7 @@ const JUMP_VELOCITY = -400.0
 @onready var player_state_machine : PlayerStateMachine = $player_state_machine
 @onready var ground_state : GroundState = $player_state_machine/ground
 @onready var player_damageable : PlayerDamageable = $player_damageable
+@onready var potion_label : Label = $potion_count
 
 @export var crouch_state : CrouchState
 
@@ -19,6 +20,7 @@ var last_checkpoint : Vector2
 var checkpoint_manager : CheckpointManager
 
 signal facing_direction_changed(facing_right : bool)
+signal consume_potion()
 
 func _ready():
 	animation_tree.active = true
@@ -26,14 +28,16 @@ func _ready():
 	
 	var check_point_manager = get_parent().get_node("checkpoint_manager")
 	
-	if is_instance_valid(checkpoint_manager) :
-		checkpoint_manager.connect("change_checkpoint", change_checkpoint)
-
+	if is_instance_valid(check_point_manager) :
+		check_point_manager.connect("change_checkpoint", change_checkpoint)
 
 func _physics_process(delta):
 	
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+	if Input.is_action_just_pressed("heal") :
+		heal()
 
 	direction = Input.get_vector("left", "right", "up", "down")
 	
@@ -66,3 +70,8 @@ func reset_ground_position() :
 
 func change_checkpoint(new_checkpoint) :
 	last_checkpoint = new_checkpoint 
+
+func heal() :
+	if potion_label.potion_count != 0 :
+		emit_signal("consume_potion")
+		player_damageable.take_damage( -20, Vector2.ZERO)

@@ -54,9 +54,9 @@ func update_facing_direction():
 	
 	emit_signal("facing_direction_change", !animated_sprite.flip_h)
 
-func get_hit(node : Node, damage : int, direction : Vector2):
+func get_hit(_node : Node, _damage : int, _direction : Vector2):
 	if damageable.health > 0 :
-		self.velocity = knockback * direction
+		self.velocity = knockback * _direction
 
 	else:
 		golem_state_machine.current_state.emit_signal("interrupt_state", death_state)

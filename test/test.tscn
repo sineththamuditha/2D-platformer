@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://chbwkavrhta3"]
+
+[ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="1_1x6im"]
+[ext_resource type="PackedScene" uid="uid://chsvj1sn3l8rg" path="res://GlobalAssets/UI/health_potion_counter/health_potion_counter.tscn" id="2_8cv6j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et0sf"]
+size = Vector2(3586, 64)
+
+[node name="test" type="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(1783, 410)
+shape = SubResource("RectangleShape2D_et0sf")
+
+[node name="Player" parent="." instance=ExtResource("1_1x6im")]
+position = Vector2(204, 270)
+
+[node name="NinePatchRect" parent="." instance=ExtResource("2_8cv6j")]

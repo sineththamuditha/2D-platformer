@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://ela3mqtudwk"]
+
+[ext_resource type="PackedScene" uid="uid://chsvj1sn3l8rg" path="res://GlobalAssets/UI/health_potion_counter/health_potion_counter.tscn" id="1_xknig"]
+
+[node name="UI_interface" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="health_potion_counter" parent="." instance=ExtResource("1_xknig")]
+layout_mode = 0
+offset_left = 1035.0
+offset_top = 38.0
+offset_right = 1139.0
+offset_bottom = 73.0

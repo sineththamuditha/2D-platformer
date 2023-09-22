@@ -3,10 +3,12 @@ extends Damageable
 class_name PlayerDamageable
 
 func _ready():
-	health = 100
+	health = Global.player_health
 
 func take_damage(damage : int, direction : Vector2):
 	health -= damage
+	
+	Global.set_player_health(health)
 	
 	emit_signal("on_hit",get_parent(), damage, direction)
 	

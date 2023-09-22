@@ -9,9 +9,6 @@ class_name GolemAttack
 func _ready():
 	golem.connect("facing_direction_change", change_attack_boxes)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func change_attack_boxes(facing_right : bool):
 	for child in get_children():

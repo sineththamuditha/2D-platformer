@@ -10,7 +10,9 @@ const heal_color : Color = Color.GREEN
 func _ready():
 	Signals.connect("on_health_change", change_health)
 
-func change_health(node : Node, health_change : int):
+func change_health(node : Node, health_change : int) -> void :
+	if !is_instance_valid(node) :
+		return
 	var label_instance : RichTextLabel = health_label.instantiate()
 	node.add_child.call_deferred(label_instance)
 	label_instance.text = str(health_change)

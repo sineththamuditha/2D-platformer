@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dnbkxybxeq3x8"]
+[gd_scene load_steps=26 format=3 uid="uid://dnbkxybxeq3x8"]
 
 [ext_resource type="Script" path="res://Level/3/scripts/scene.gd" id="1_pdf1h"]
 [ext_resource type="Texture2D" uid="uid://djaiy2gm0kyyg" path="res://Level/3/background/back.png" id="1_rfat0"]
@@ -7,10 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://dlis8kna1cr6u" path="res://Level/3/background/near.png" id="3_chtgp"]
 [ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="5_fwr6m"]
 [ext_resource type="Script" path="res://Level/scripts/checkpoint_manager.gd" id="7_atvvo"]
+[ext_resource type="PackedScene" uid="uid://f3s7vqxwvxxg" path="res://GlobalAssets/Enemies/Ghoul/ghoul.tscn" id="7_tsggc"]
 [ext_resource type="Script" path="res://GlobalAssets/Scripts/health_manager.gd" id="8_6faig"]
 [ext_resource type="Script" path="res://Level/scripts/checkpoint.gd" id="8_6mg64"]
 [ext_resource type="PackedScene" uid="uid://o1mviek0dnjf" path="res://GlobalAssets/UI/health_label.tscn" id="9_ndoa1"]
 [ext_resource type="PackedScene" uid="uid://pvrjvo5t6vwx" path="res://GlobalAssets/Enemies/Lich Mage/lich.tscn" id="11_uo2g6"]
+[ext_resource type="PackedScene" uid="uid://dfu87n5qkypu0" path="res://GlobalAssets/Enemies/Imp/imp.tscn" id="12_v7r27"]
+[ext_resource type="PackedScene" uid="uid://bt07rjwjfo2xy" path="res://GlobalAssets/Collectibles/Health Potion/health_potion.tscn" id="13_8cyb6"]
+[ext_resource type="PackedScene" uid="uid://db3q75p4ug8vm" path="res://GlobalAssets/Enemies/Golem/golem.tscn" id="14_wpdlx"]
+[ext_resource type="PackedScene" uid="uid://bot324ym6cyi6" path="res://GlobalAssets/Enemies/Spider/spider.tscn" id="15_e7n6d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_apqts"]
 texture = ExtResource("2_bkw35")
@@ -407,7 +412,61 @@ size = Vector2(214.5, 116)
 script = ExtResource("1_pdf1h")
 
 [node name="Player" parent="." instance=ExtResource("5_fwr6m")]
-position = Vector2(4184, 417)
+position = Vector2(105, 214)
+
+[node name="enemies" type="Node" parent="."]
+
+[node name="Lich" parent="enemies" instance=ExtResource("11_uo2g6")]
+position = Vector2(4452, 428)
+
+[node name="imp#1" parent="enemies" instance=ExtResource("12_v7r27")]
+z_index = 1
+position = Vector2(670, 233)
+
+[node name="imp#2" parent="enemies" instance=ExtResource("12_v7r27")]
+z_index = 1
+position = Vector2(1715, 247)
+
+[node name="imp#3" parent="enemies" instance=ExtResource("12_v7r27")]
+z_index = 1
+position = Vector2(1872, 247)
+
+[node name="golem#1" parent="enemies" instance=ExtResource("14_wpdlx")]
+z_index = 1
+position = Vector2(1277, 281)
+
+[node name="golem#2" parent="enemies" instance=ExtResource("14_wpdlx")]
+z_index = 1
+position = Vector2(2472, 209)
+
+[node name="spider#1" parent="enemies" instance=ExtResource("15_e7n6d")]
+position = Vector2(621, 523)
+
+[node name="spider#2" parent="enemies" instance=ExtResource("15_e7n6d")]
+z_index = 1
+position = Vector2(1882, 539)
+
+[node name="ghoul#1" parent="enemies" instance=ExtResource("7_tsggc")]
+z_index = 1
+position = Vector2(2992, 388)
+
+[node name="ghoul#2" parent="enemies" instance=ExtResource("7_tsggc")]
+z_index = 1
+position = Vector2(2296, 473)
+
+[node name="collectibles" type="Node" parent="."]
+
+[node name="health_potion#1" parent="collectibles" instance=ExtResource("13_8cyb6")]
+z_index = 1
+position = Vector2(709, 249)
+
+[node name="health_potion#2" parent="collectibles" instance=ExtResource("13_8cyb6")]
+z_index = 1
+position = Vector2(1788, 262)
+
+[node name="health_potion#3" parent="collectibles" instance=ExtResource("13_8cyb6")]
+z_index = 1
+position = Vector2(2537, 280)
 
 [node name="background" type="Node" parent="."]
 
@@ -604,28 +663,33 @@ metadata/_edit_lock_ = true
 z_index = -2
 position = Vector2(2836, 442)
 texture = ExtResource("2_iejgn")
+metadata/_edit_lock_ = true
 
 [node name="middle_10" type="Sprite2D" parent="middleground"]
 z_index = -2
 position = Vector2(3169, 442)
 texture = ExtResource("2_iejgn")
 flip_h = true
+metadata/_edit_lock_ = true
 
 [node name="middle_11" type="Sprite2D" parent="middleground"]
 z_index = -2
 position = Vector2(3503, 443)
 texture = ExtResource("2_iejgn")
+metadata/_edit_lock_ = true
 
 [node name="middle_12" type="Sprite2D" parent="middleground"]
 z_index = -2
 position = Vector2(3836, 443)
 texture = ExtResource("2_iejgn")
 flip_h = true
+metadata/_edit_lock_ = true
 
 [node name="middle_13" type="Sprite2D" parent="middleground"]
 z_index = -2
 position = Vector2(4170, 444)
 texture = ExtResource("2_iejgn")
+metadata/_edit_lock_ = true
 
 [node name="middle_14" type="Sprite2D" parent="middleground"]
 z_index = -2
@@ -668,7 +732,7 @@ layer_0/tile_data = PackedInt32Array(2162705, 524288, 13, 2228241, 524288, 14, 2
 script = ExtResource("7_atvvo")
 
 [node name="checkpoint_area_1" type="Area2D" parent="checkpoint_manager"]
-collision_layer = 8
+collision_layer = 9
 collision_mask = 2
 script = ExtResource("8_6mg64")
 checkpoint_priority = 1
@@ -679,7 +743,7 @@ position = Vector2(1275, 297.5)
 shape = SubResource("RectangleShape2D_bc65m")
 
 [node name="checkpoint_area_2" type="Area2D" parent="checkpoint_manager"]
-collision_layer = 8
+collision_layer = 9
 collision_mask = 2
 script = ExtResource("8_6mg64")
 checkpoint_priority = 2
@@ -689,7 +753,7 @@ position = Vector2(2861, 380)
 shape = SubResource("RectangleShape2D_easal")
 
 [node name="checkpoint_area_3" type="Area2D" parent="checkpoint_manager"]
-collision_layer = 8
+collision_layer = 9
 collision_mask = 2
 script = ExtResource("8_6mg64")
 checkpoint_priority = 3
@@ -705,9 +769,6 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("8_6faig")
 health_label = ExtResource("9_ndoa1")
-
-[node name="Lich" parent="." instance=ExtResource("11_uo2g6")]
-position = Vector2(4452, 428)
 
 [connection signal="body_entered" from="checkpoint_manager/checkpoint_area_1" to="checkpoint_manager/checkpoint_area_1" method="_on_body_entered"]
 [connection signal="body_entered" from="checkpoint_manager/checkpoint_area_2" to="checkpoint_manager/checkpoint_area_2" method="_on_body_entered"]

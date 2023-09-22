@@ -1,11 +1,14 @@
 extends Node2D
 
+const camera_right_limit = 4570
+const camera_bottom_limit = 650
 
-# Called when the node enters the scene tree for the first time.
+
+@onready var player : Player = $Player
+
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	var camera = player.get_node("player_camera")
+	
+	camera.set_camera_limits( 0, camera_right_limit, 0, camera_bottom_limit)
+	
+	camera.change_zoom(Vector2(1.7,1.7))

@@ -22,7 +22,7 @@ func stop_chasing(_player : Player):
 func get_direction():
 	if !is_instance_valid(chasing_character) :
 		emit_signal("interrupt_state", idle_state)
-		return
+		return Vector2.ZERO
 	var direction = ((chasing_character.position - player.position).normalized())
 	if (direction.x > 0 ):
 		return Vector2.RIGHT

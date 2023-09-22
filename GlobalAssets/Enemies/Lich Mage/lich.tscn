@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://jhv11eafa53h" path="res://GlobalAssets/Enemies/Lich Mage/animations/cast_2.png" id="4_d7hwp"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/detection_signaling.gd" id="6_v7d1n"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/attack_detection.gd" id="7_gn3hi"]
+[ext_resource type="Script" path="res://GlobalAssets/Player/states/player_state_machine.gd" id="8_1r3l7"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/scripts/attack.gd" id="8_m6e4u"]
 [ext_resource type="Script" path="res://GlobalAssets/Scripts/flip_attack_boxes.gd" id="8_veh6q"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/states/idle_state.gd" id="9_wylvm"]
@@ -16,7 +17,6 @@
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/scripts/cast_area_detection.gd" id="11_bgy7e"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/states/attack_state.gd" id="12_1ylgk"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/states/chasing_state.gd" id="12_m5xvg"]
-[ext_resource type="Script" path="res://GlobalAssets/Scripts/player_state_machine.gd" id="13_a71oe"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/damagable.gd" id="14_xc0u0"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/states/cast_state.gd" id="16_3xfuk"]
 [ext_resource type="PackedScene" uid="uid://bthgkc8eucv8s" path="res://GlobalAssets/Enemies/Lich Mage/fireball/fireball.tscn" id="19_vpato"]
@@ -1447,6 +1447,7 @@ anim_player = NodePath("../animation_player")
 "parameters/idle and move/blend_position" = 0
 
 [node name="hit_box" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -14)
 shape = SubResource("CapsuleShape2D_ttvpj")
 
@@ -1497,7 +1498,7 @@ shape = SubResource("RectangleShape2D_dd5qx")
 metadata/_edit_lock_ = true
 
 [node name="lich_state_machine" type="Node" parent="." node_paths=PackedStringArray("player", "animation_tree", "current_state")]
-script = ExtResource("13_a71oe")
+script = ExtResource("8_1r3l7")
 player = NodePath("..")
 animation_tree = NodePath("../animation_tree")
 current_state = NodePath("idle_state")

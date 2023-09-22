@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bpbmd5bjr7iev"]
+[gd_scene load_steps=28 format=3 uid="uid://bpbmd5bjr7iev"]
 
 [ext_resource type="Script" path="res://Level/1/scripts/scene.gd" id="1_thkwf"]
 [ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="2_kpwvr"]
@@ -10,12 +10,16 @@
 [ext_resource type="Texture2D" uid="uid://b4kiywvnpjp3g" path="res://Level/1/tiles/stairs-left-2.png" id="7_0haj3"]
 [ext_resource type="Texture2D" uid="uid://tongs6tqc1vi" path="res://Level/1/props/house-a.png" id="9_60f5o"]
 [ext_resource type="Texture2D" uid="uid://qvbh71p1y68q" path="res://Level/1/props/house-b.png" id="10_csyfd"]
+[ext_resource type="PackedScene" uid="uid://dfu87n5qkypu0" path="res://GlobalAssets/Enemies/Imp/imp.tscn" id="11_ho8ax"]
 [ext_resource type="Texture2D" uid="uid://g6ggnu3xdfyc" path="res://Level/1/props/street-lamp.png" id="11_m0ly1"]
 [ext_resource type="Texture2D" uid="uid://b4up2wcp1drp4" path="res://Level/1/props/wagon.png" id="12_06ud4"]
 [ext_resource type="Texture2D" uid="uid://rji0dwad2gq2" path="res://Level/1/props/house-c.png" id="13_dwk25"]
 [ext_resource type="Texture2D" uid="uid://caaqt2v5ov8xf" path="res://Level/1/props/crate-stack.png" id="14_wl3eb"]
 [ext_resource type="Texture2D" uid="uid://bc8w4xh6xa381" path="res://Level/1/props/barrel.png" id="15_gc47y"]
 [ext_resource type="Texture2D" uid="uid://bthb60e0kgt7j" path="res://Level/1/props/well.png" id="16_lhxlc"]
+[ext_resource type="PackedScene" uid="uid://bt07rjwjfo2xy" path="res://GlobalAssets/Collectibles/Health Potion/health_potion.tscn" id="17_ql2o2"]
+[ext_resource type="PackedScene" uid="uid://chsvj1sn3l8rg" path="res://GlobalAssets/UI/health_potion_counter/health_potion_counter.tscn" id="18_lb8ha"]
+[ext_resource type="PackedScene" uid="uid://bot324ym6cyi6" path="res://GlobalAssets/Enemies/Spider/spider.tscn" id="19_sle3a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yxfi"]
 size = Vector2(20, 146.775)
@@ -420,14 +424,109 @@ size = Vector2(77, 239)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3uesi"]
 size = Vector2(294, 286.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlc0r"]
+size = Vector2(254.25, 276.5)
+
 [node name="Scene" type="Node2D"]
 script = ExtResource("1_thkwf")
+
+[node name="NinePatchRect" parent="." instance=ExtResource("18_lb8ha")]
+visible = false
+offset_left = 1107.0
+offset_top = 70.0
+offset_right = 1211.0
+offset_bottom = 110.0
 
 [node name="health_manager" parent="." instance=ExtResource("3_w45pc")]
 offset_left = 404.0
 offset_top = 435.0
 offset_right = 404.0
 offset_bottom = 435.0
+
+[node name="Player" parent="." instance=ExtResource("2_kpwvr")]
+position = Vector2(115, 593)
+
+[node name="enemies" type="Node" parent="."]
+
+[node name="spider#1" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(834, 652)
+
+[node name="spider#2" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(1141, 648)
+
+[node name="spider#3" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(1542, 550)
+
+[node name="spider#4" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(1928, 550)
+
+[node name="spider#5" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(3288, 472)
+
+[node name="spider#6" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(3865, 472)
+
+[node name="spider#7" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(4170, 473)
+
+[node name="spider#8" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(5278, 646)
+
+[node name="spider#9" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(5693, 652)
+
+[node name="spider#10" parent="enemies" instance=ExtResource("19_sle3a")]
+z_index = 1
+position = Vector2(6145, 649)
+
+[node name="imp#1" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(2662, 554)
+
+[node name="imp#2" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(2760, 552)
+
+[node name="imp#3" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(2868, 553)
+
+[node name="imp#4" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(3481, 465)
+
+[node name="imp#5" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(3625, 465)
+
+[node name="imp#6" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(4620, 649)
+
+[node name="imp#7" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(4779, 647)
+
+[node name="imp#8" parent="enemies" instance=ExtResource("11_ho8ax")]
+z_index = 1
+position = Vector2(4949, 646)
+
+[node name="collectibles" type="Node" parent="."]
+
+[node name="health_potion#1" parent="collectibles" instance=ExtResource("17_ql2o2")]
+position = Vector2(2966, 567)
+
+[node name="health_potion#2" parent="collectibles" instance=ExtResource("17_ql2o2")]
+position = Vector2(6562, 654)
 
 [node name="floor" type="Node" parent="."]
 
@@ -596,9 +695,6 @@ scale = Vector2(2, 2)
 texture = ExtResource("3_un7qe")
 metadata/_edit_lock_ = true
 
-[node name="Player" parent="." instance=ExtResource("2_kpwvr")]
-position = Vector2(6606, 586)
-
 [node name="middleground" type="Node" parent="."]
 
 [node name="middleground" type="Sprite2D" parent="middleground"]
@@ -691,8 +787,6 @@ texture = ExtResource("5_2mpij")
 flip_h = true
 metadata/_edit_lock_ = true
 
-[node name="enemies" type="Node" parent="."]
-
 [node name="props" type="Node" parent="."]
 
 [node name="House-a" type="Sprite2D" parent="props"]
@@ -700,18 +794,21 @@ z_index = -1
 position = Vector2(535, 500)
 scale = Vector2(2, 2)
 texture = ExtResource("9_60f5o")
+metadata/_edit_lock_ = true
 
 [node name="House-a2" type="Sprite2D" parent="props"]
 z_index = -1
 position = Vector2(4645, 510)
 scale = Vector2(2, 2)
 texture = ExtResource("9_60f5o")
+metadata/_edit_lock_ = true
 
 [node name="House-a3" type="Sprite2D" parent="props"]
 z_index = -1
 position = Vector2(5209, 505)
 scale = Vector2(2, 2)
 texture = ExtResource("9_60f5o")
+metadata/_edit_lock_ = true
 
 [node name="House-b" type="Sprite2D" parent="props"]
 z_index = -2
@@ -725,93 +822,120 @@ z_index = -1
 position = Vector2(3416, 452)
 scale = Vector2(2, 2)
 texture = ExtResource("10_csyfd")
+metadata/_edit_lock_ = true
 
 [node name="House-b3" type="Sprite2D" parent="props"]
 z_index = -1
 position = Vector2(3967, 445)
 scale = Vector2(2, 2)
 texture = ExtResource("10_csyfd")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp" type="Sprite2D" parent="props"]
 position = Vector2(779, 528)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp2" type="Sprite2D" parent="props"]
 position = Vector2(2540, 427)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp4" type="Sprite2D" parent="props"]
 position = Vector2(3213, 338)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp5" type="Sprite2D" parent="props"]
 position = Vector2(4448, 519)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp6" type="Sprite2D" parent="props"]
 position = Vector2(4998, 523)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp7" type="Sprite2D" parent="props"]
 position = Vector2(6432, 523)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Street-lamp3" type="Sprite2D" parent="props"]
 position = Vector2(1546, 425)
 scale = Vector2(3, 3)
 texture = ExtResource("11_m0ly1")
+metadata/_edit_lock_ = true
 
 [node name="Wagon" type="Sprite2D" parent="props"]
 position = Vector2(906, 609)
 scale = Vector2(2, 2)
 texture = ExtResource("12_06ud4")
+metadata/_edit_lock_ = true
 
 [node name="House-c" type="Sprite2D" parent="props"]
 z_index = -2
 position = Vector2(1771, 518)
 scale = Vector2(2, 2)
 texture = ExtResource("13_dwk25")
+metadata/_edit_lock_ = true
 
 [node name="House-c3" type="Sprite2D" parent="props"]
 z_index = -1
 position = Vector2(2821, 495)
 scale = Vector2(2, 2)
 texture = ExtResource("13_dwk25")
+metadata/_edit_lock_ = true
 
 [node name="House-c4" type="Sprite2D" parent="props"]
 z_index = -1
 position = Vector2(5777, 508)
 scale = Vector2(2, 2)
 texture = ExtResource("13_dwk25")
+metadata/_edit_lock_ = true
 
 [node name="Crate-stack" type="Sprite2D" parent="props"]
 position = Vector2(3706, 437)
 scale = Vector2(2, 2)
 texture = ExtResource("14_wl3eb")
+metadata/_edit_lock_ = true
 
 [node name="Barrel" type="Sprite2D" parent="props"]
 position = Vector2(2388, 560)
 scale = Vector2(2, 2)
 texture = ExtResource("15_gc47y")
+metadata/_edit_lock_ = true
 
 [node name="House-c2" type="Sprite2D" parent="props"]
 z_index = -2
 position = Vector2(2263, 492)
 scale = Vector2(2, 2)
 texture = ExtResource("13_dwk25")
+metadata/_edit_lock_ = true
 
 [node name="Wagon2" type="Sprite2D" parent="props"]
 position = Vector2(6178, 611)
 scale = Vector2(2, 2)
 texture = ExtResource("12_06ud4")
+metadata/_edit_lock_ = true
 
-[node name="Well" type="Sprite2D" parent="."]
+[node name="endpoint" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="detection_area" type="CollisionShape2D" parent="endpoint"]
+position = Vector2(6746.88, 547.25)
+shape = SubResource("RectangleShape2D_vlc0r")
+
+[node name="Well" type="Sprite2D" parent="endpoint"]
 position = Vector2(6746, 567)
 scale = Vector2(4, 4)
 texture = ExtResource("16_lhxlc")
+
+[connection signal="body_entered" from="endpoint" to="." method="_on_endpoint_body_entered"]
+[connection signal="body_exited" from="endpoint" to="." method="_on_endpoint_body_exited"]
