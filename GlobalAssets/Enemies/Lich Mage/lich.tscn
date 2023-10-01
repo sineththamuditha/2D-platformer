@@ -1,4 +1,4 @@
-[gd_scene load_steps=208 format=3 uid="uid://pvrjvo5t6vwx"]
+[gd_scene load_steps=209 format=3 uid="uid://pvrjvo5t6vwx"]
 
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/lich.gd" id="1_qgyln"]
 [ext_resource type="Texture2D" uid="uid://7kwpw84016of" path="res://GlobalAssets/Enemies/Lich Mage/animations/attack.png" id="1_t7jks"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/damagable.gd" id="14_xc0u0"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Lich Mage/states/cast_state.gd" id="16_3xfuk"]
 [ext_resource type="PackedScene" uid="uid://bthgkc8eucv8s" path="res://GlobalAssets/Enemies/Lich Mage/fireball/fireball.tscn" id="19_vpato"]
+[ext_resource type="AudioStream" uid="uid://cv5pvr4de3ey4" path="res://GlobalAssets/Player/sounds/death.ogg" id="21_jlm88"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ks1ot"]
 atlas = ExtResource("1_t7jks")
@@ -1515,8 +1516,10 @@ idle_state = NodePath("../idle_state")
 attack_state = NodePath("../attack_state")
 attack_detection = NodePath("../../attack_detection")
 
-[node name="dead_state" type="Node" parent="lich_state_machine"]
+[node name="dead_state" type="Node" parent="lich_state_machine" node_paths=PackedStringArray("death_sound")]
 script = ExtResource("11_6u7ww")
+death_sound = NodePath("../../death_sound")
+can_move = false
 
 [node name="attack_state" type="Node" parent="lich_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection", "cast_detection", "chase_detection", "idle_state")]
 script = ExtResource("12_1ylgk")
@@ -1550,13 +1553,14 @@ one_shot = true
 
 [node name="Damageable" type="Node" parent="."]
 script = ExtResource("14_xc0u0")
+health = 50
 
 [node name="damage_timer" type="Timer" parent="Damageable"]
 wait_time = 2.0
 one_shot = true
 
-[node name="test_timer" type="Timer" parent="."]
-autostart = true
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("21_jlm88")
 
 [connection signal="animation_finished" from="animation_tree" to="lich_state_machine/attack_state" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="lich_state_machine/cast_state" method="_on_animation_tree_animation_finished"]
@@ -1568,4 +1572,5 @@ autostart = true
 [connection signal="body_entered" from="attack_area" to="attack_area" method="_on_body_entered"]
 [connection signal="body_entered" from="cast_area_detection" to="cast_area_detection" method="_on_body_entered"]
 [connection signal="body_exited" from="cast_area_detection" to="cast_area_detection" method="_on_body_exited"]
+[connection signal="timeout" from="lich_state_machine/attack_state/attack_timer" to="lich_state_machine/attack_state" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="lich_state_machine/cast_state/fireball_timer" to="lich_state_machine/cast_state" method="_on_fireball_timer_timeout"]

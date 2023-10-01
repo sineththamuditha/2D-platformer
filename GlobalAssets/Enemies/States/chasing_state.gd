@@ -7,14 +7,11 @@ class_name ChasingState
 @export var attack_state : State
 @export var attack_detection : AttackDetection
 
-var chasing_character : CharacterBody2D = null
+var chasing_character : Player = null
 
 func _ready():
 	detection_area.connect("stop_chasing", stop_chasing)
 	attack_detection.connect("attack_player", attack_player)
-
-func state_process(_delta):
-	pass
 
 func stop_chasing(_player : Player):
 	next_state = idle_state
@@ -31,4 +28,4 @@ func get_direction():
 
 func attack_player(_player : Player):
 	emit_signal("interrupt_state", attack_state)
-	#attack_state.attacking_character = _player
+	attack_state.attacking_character = _player

@@ -13,19 +13,29 @@ scale = Vector2(7.25735, 6.699)
 texture = ExtResource("2_rfvcb")
 
 [node name="tree_layer" type="ParallaxLayer" parent="."]
-motion_mirroring = Vector2(1280, 2.08165e-12)
+motion_mirroring = Vector2(1000, 2.08165e-12)
 
 [node name="layer1" type="Sprite2D" parent="tree_layer"]
-position = Vector2(234, 770)
+position = Vector2(233, 778)
 scale = Vector2(0.871323, 3.7375)
 texture = ExtResource("3_qhtes")
 
 [node name="layer2" type="Sprite2D" parent="tree_layer"]
-position = Vector2(1034, 766)
+position = Vector2(1035, 790)
 scale = Vector2(1.02574, 3.7375)
 texture = ExtResource("3_qhtes")
 
 [node name="layer3" type="Sprite2D" parent="tree_layer"]
 position = Vector2(596, 810)
+scale = Vector2(1.02574, 3.7375)
+texture = ExtResource("3_qhtes")
+
+[node name="layer4" type="Sprite2D" parent="tree_layer"]
+position = Vector2(1585, 788)
+scale = Vector2(1.02574, 3.7375)
+texture = ExtResource("3_qhtes")
+
+[node name="layer5" type="Sprite2D" parent="tree_layer"]
+position = Vector2(1938, 837)
 scale = Vector2(1.02574, 3.7375)
 texture = ExtResource("3_qhtes")

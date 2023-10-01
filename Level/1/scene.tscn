@@ -1,7 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://bpbmd5bjr7iev"]
+[gd_scene load_steps=30 format=3 uid="uid://bpbmd5bjr7iev"]
 
 [ext_resource type="Script" path="res://Level/1/scripts/scene.gd" id="1_thkwf"]
 [ext_resource type="PackedScene" uid="uid://cwfxasetk3hbq" path="res://GlobalAssets/Player/player.tscn" id="2_kpwvr"]
+[ext_resource type="PackedScene" uid="uid://ce26x5doakaka" path="res://GlobalAssets/UI/GUI/gui.tscn" id="2_l13br"]
+[ext_resource type="Script" path="res://Level/scripts/local_text_handler.gd" id="3_dbw7b"]
 [ext_resource type="Texture2D" uid="uid://dxrxmym704ffv" path="res://Level/1/background/background.png" id="3_un7qe"]
 [ext_resource type="PackedScene" uid="uid://boxllo0pi4pj8" path="res://GlobalAssets/UI/health_manager.tscn" id="3_w45pc"]
 [ext_resource type="Texture2D" uid="uid://i6jk56kjv0dp" path="res://Level/1/background/middleground.png" id="5_2mpij"]
@@ -18,7 +20,6 @@
 [ext_resource type="Texture2D" uid="uid://bc8w4xh6xa381" path="res://Level/1/props/barrel.png" id="15_gc47y"]
 [ext_resource type="Texture2D" uid="uid://bthb60e0kgt7j" path="res://Level/1/props/well.png" id="16_lhxlc"]
 [ext_resource type="PackedScene" uid="uid://bt07rjwjfo2xy" path="res://GlobalAssets/Collectibles/Health Potion/health_potion.tscn" id="17_ql2o2"]
-[ext_resource type="PackedScene" uid="uid://chsvj1sn3l8rg" path="res://GlobalAssets/UI/health_potion_counter/health_potion_counter.tscn" id="18_lb8ha"]
 [ext_resource type="PackedScene" uid="uid://bot324ym6cyi6" path="res://GlobalAssets/Enemies/Spider/spider.tscn" id="19_sle3a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yxfi"]
@@ -424,18 +425,20 @@ size = Vector2(77, 239)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3uesi"]
 size = Vector2(294, 286.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b8bsm"]
+size = Vector2(79.4902, 367)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlc0r"]
 size = Vector2(254.25, 276.5)
 
 [node name="Scene" type="Node2D"]
 script = ExtResource("1_thkwf")
 
-[node name="NinePatchRect" parent="." instance=ExtResource("18_lb8ha")]
-visible = false
-offset_left = 1107.0
-offset_top = 70.0
-offset_right = 1211.0
-offset_bottom = 110.0
+[node name="GUI" parent="." instance=ExtResource("2_l13br")]
+
+[node name="LocalTextHandler" type="Node" parent="."]
+script = ExtResource("3_dbw7b")
+dialogue_box_color = "orange"
 
 [node name="health_manager" parent="." instance=ExtResource("3_w45pc")]
 offset_left = 404.0
@@ -466,7 +469,7 @@ position = Vector2(1928, 550)
 
 [node name="spider#5" parent="enemies" instance=ExtResource("19_sle3a")]
 z_index = 1
-position = Vector2(3288, 472)
+position = Vector2(5673, 652)
 
 [node name="spider#6" parent="enemies" instance=ExtResource("19_sle3a")]
 z_index = 1
@@ -474,19 +477,7 @@ position = Vector2(3865, 472)
 
 [node name="spider#7" parent="enemies" instance=ExtResource("19_sle3a")]
 z_index = 1
-position = Vector2(4170, 473)
-
-[node name="spider#8" parent="enemies" instance=ExtResource("19_sle3a")]
-z_index = 1
-position = Vector2(5278, 646)
-
-[node name="spider#9" parent="enemies" instance=ExtResource("19_sle3a")]
-z_index = 1
-position = Vector2(5693, 652)
-
-[node name="spider#10" parent="enemies" instance=ExtResource("19_sle3a")]
-z_index = 1
-position = Vector2(6145, 649)
+position = Vector2(5052, 657)
 
 [node name="imp#1" parent="enemies" instance=ExtResource("11_ho8ax")]
 z_index = 1
@@ -498,7 +489,7 @@ position = Vector2(2760, 552)
 
 [node name="imp#3" parent="enemies" instance=ExtResource("11_ho8ax")]
 z_index = 1
-position = Vector2(2868, 553)
+position = Vector2(4708, 649)
 
 [node name="imp#4" parent="enemies" instance=ExtResource("11_ho8ax")]
 z_index = 1
@@ -511,14 +502,6 @@ position = Vector2(3625, 465)
 [node name="imp#6" parent="enemies" instance=ExtResource("11_ho8ax")]
 z_index = 1
 position = Vector2(4620, 649)
-
-[node name="imp#7" parent="enemies" instance=ExtResource("11_ho8ax")]
-z_index = 1
-position = Vector2(4779, 647)
-
-[node name="imp#8" parent="enemies" instance=ExtResource("11_ho8ax")]
-z_index = 1
-position = Vector2(4949, 646)
 
 [node name="collectibles" type="Node" parent="."]
 
@@ -925,6 +908,15 @@ scale = Vector2(2, 2)
 texture = ExtResource("12_06ud4")
 metadata/_edit_lock_ = true
 
+[node name="dialogue_triggers" type="Node" parent="."]
+
+[node name="trigger_areas" type="Area2D" parent="dialogue_triggers"]
+collision_mask = 2
+
+[node name="detection_area_1" type="CollisionShape2D" parent="dialogue_triggers/trigger_areas"]
+position = Vector2(6524.75, 495.5)
+shape = SubResource("RectangleShape2D_b8bsm")
+
 [node name="endpoint" type="Area2D" parent="."]
 collision_mask = 2
 
@@ -937,5 +929,11 @@ position = Vector2(6746, 567)
 scale = Vector2(4, 4)
 texture = ExtResource("16_lhxlc")
 
+[node name="level_finish_timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="body_entered" from="dialogue_triggers/trigger_areas" to="." method="_on_trigger_areas_body_entered"]
 [connection signal="body_entered" from="endpoint" to="." method="_on_endpoint_body_entered"]
 [connection signal="body_exited" from="endpoint" to="." method="_on_endpoint_body_exited"]
+[connection signal="timeout" from="level_finish_timer" to="." method="_on_level_finish_timer_timeout"]

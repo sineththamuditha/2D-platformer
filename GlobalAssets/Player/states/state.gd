@@ -3,8 +3,8 @@ extends Node
 class_name State
 
 const JUMP_VELOCITY = -400.0
-
 @export var can_move : bool = true
+var final_state : bool = false
 
 var player : CharacterBody2D
 var playback : AnimationNodeStateMachinePlayback
@@ -25,3 +25,9 @@ func on_exit():
 	
 func on_enter():
 	pass 
+
+func is_final():
+	return final_state
+	
+#func change animation(animation : String):
+

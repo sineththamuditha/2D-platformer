@@ -2,15 +2,10 @@ extends Area2D
 
 @export var lich : Lich
 
-@export var damage : int = 12
+@export var damage : int = 10
 
 func _ready():
 	lich.connect("facing_direction_change", change_attack_boxes)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func change_attack_boxes(facing_right : bool):
 	for child in get_children():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://bot324ym6cyi6"]
+[gd_scene load_steps=105 format=3 uid="uid://bot324ym6cyi6"]
 
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Spider/scripts/spider.gd" id="1_6fjhk"]
 [ext_resource type="Texture2D" uid="uid://x5xvu3lv640h" path="res://GlobalAssets/Enemies/Spider/animations/attack.png" id="1_ifhck"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/States/hit_state.gd" id="15_8sny8"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/States/dead_state.gd" id="16_bpnh3"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/damagable.gd" id="17_dfd2b"]
+[ext_resource type="AudioStream" uid="uid://cv5pvr4de3ey4" path="res://GlobalAssets/Player/sounds/death.ogg" id="19_a1pep"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18j4q"]
 atlas = ExtResource("1_ifhck")
@@ -739,7 +740,7 @@ states/get_hit/position = Vector2(469.945, 234.212)
 states/look_around/node = SubResource("AnimationNodeAnimation_eicvn")
 states/look_around/position = Vector2(675.22, 161.063)
 transitions = ["Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_8q8qs"), "idle and move", "get_hit", SubResource("AnimationNodeStateMachineTransition_vp33w"), "get_hit", "idle and move", SubResource("AnimationNodeStateMachineTransition_8npiy"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_ttj05"), "look_around", "idle and move", SubResource("AnimationNodeStateMachineTransition_awhhs"), "idle and move", "look_around", SubResource("AnimationNodeStateMachineTransition_xddmg"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_vmc4d"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_7jqe8"), "attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_e1n4i"), "attack_2", "attack_1", SubResource("AnimationNodeStateMachineTransition_jy7b7"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_kq1v6")]
-graph_offset = Vector2(48.42, -122.948)
+graph_offset = Vector2(253.313, 94.4095)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bitv4"]
 radius = 16.0
@@ -855,17 +856,24 @@ chase_state = NodePath("../chasing_state")
 can_move = false
 
 [node name="hit_timer" type="Timer" parent="spider_state_machine/hit_state"]
+wait_time = 0.05
 one_shot = true
 
-[node name="death_state" type="Node" parent="spider_state_machine"]
+[node name="death_state" type="Node" parent="spider_state_machine" node_paths=PackedStringArray("death_sound")]
 script = ExtResource("16_bpnh3")
+death_sound = NodePath("../../death_sound")
+can_move = false
 
 [node name="Damageable" type="Node" parent="."]
 script = ExtResource("17_dfd2b")
+health = 15
 
 [node name="damage_timer" type="Timer" parent="Damageable"]
 wait_time = 2.0
 one_shot = true
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_a1pep")
 
 [connection signal="animation_finished" from="animation_tree" to="spider_state_machine/attack_state" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="Damageable" method="_on_animation_tree_animation_finished"]

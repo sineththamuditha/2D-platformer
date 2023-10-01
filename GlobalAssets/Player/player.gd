@@ -10,7 +10,7 @@ const JUMP_VELOCITY = -400.0
 @onready var player_state_machine : PlayerStateMachine = $player_state_machine
 @onready var ground_state : GroundState = $player_state_machine/ground
 @onready var player_damageable : PlayerDamageable = $player_damageable
-@onready var potion_label : Label = $potion_count
+@onready var potion_label : Label = $potion_counter
 
 @export var crouch_state : CrouchState
 
@@ -18,6 +18,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction : Vector2 = Vector2.ZERO
 var last_checkpoint : Vector2
 var checkpoint_manager : CheckpointManager
+var conversing : bool = false
 
 signal facing_direction_changed(facing_right : bool)
 signal consume_potion()
@@ -35,6 +36,12 @@ func _physics_process(delta):
 	
 	if not is_on_floor():
 		velocity.y += gravity * delta
+		
+	if conversing :
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		move_and_slide()
+		update_animation()
+		return
 		
 	if Input.is_action_just_pressed("heal") :
 		heal()
@@ -75,3 +82,5 @@ func heal() :
 	if potion_label.potion_count != 0 :
 		emit_signal("consume_potion")
 		player_damageable.take_damage( -20, Vector2.ZERO)
+		Global.consume_potion()
+

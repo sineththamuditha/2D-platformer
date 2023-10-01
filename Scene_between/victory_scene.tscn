@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://8rmofr4nnnob"]
+
+[ext_resource type="PackedScene" uid="uid://clmb0ohvfxrc5" path="res://Scene_between/background.tscn" id="1_a8v15"]
+[ext_resource type="Script" path="res://Scene_between/victory_scene.gd" id="1_qhdmg"]
+[ext_resource type="FontFile" uid="uid://ckp3r3ftkl4gf" path="res://GlobalAssets/UI/Font/PixelifySans-VariableFont_wght.ttf" id="2_xhgn8"]
+
+[node name="victory_scene" type="Node2D"]
+script = ExtResource("1_qhdmg")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="main_menu_btn" type="Button" parent="CanvasLayer"]
+offset_left = 631.0
+offset_top = 538.0
+offset_right = 1375.0
+offset_bottom = 687.0
+theme_override_fonts/font = ExtResource("2_xhgn8")
+theme_override_font_sizes/font_size = 60
+text = "Main menu"
+
+[node name="quit_btn" type="Button" parent="CanvasLayer"]
+offset_left = 629.0
+offset_top = 745.0
+offset_right = 1373.0
+offset_bottom = 894.0
+theme_override_fonts/font = ExtResource("2_xhgn8")
+theme_override_font_sizes/font_size = 60
+text = "Quit"
+
+[node name="background" parent="." instance=ExtResource("1_a8v15")]
+
+[node name="main texts" type="Node" parent="."]
+
+[node name="victory_text" type="Label" parent="main texts"]
+offset_left = 81.0
+offset_top = 287.0
+offset_right = 1871.0
+offset_bottom = 507.0
+theme_override_colors/font_color = Color(0, 0.807843, 0.0431373, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 7
+theme_override_constants/shadow_offset_y = 7
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_xhgn8")
+theme_override_font_sizes/font_size = 150
+text = "You are victorious !!!"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/main_menu_btn" to="." method="_on_main_menu_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/quit_btn" to="." method="_on_quit_btn_pressed"]

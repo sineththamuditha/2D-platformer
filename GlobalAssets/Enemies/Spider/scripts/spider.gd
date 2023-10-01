@@ -19,11 +19,14 @@ func _ready():
 	animation_tree.active = true
 
 func _physics_process(delta):
+	
+	if position.y > 1000:
+		queue_free()
 
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-	if spider_state_machine.current_state is ChasingState :
+	if spider_state_machine.current_state is ChasingState or spider_state_machine.current_state is SpiderAttackState :
 		direction =  spider_state_machine.current_state.get_direction()
 	else:
 		direction = Vector2.ZERO

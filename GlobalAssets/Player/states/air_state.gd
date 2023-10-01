@@ -6,6 +6,7 @@ const DOUBLE_JUMP_VELOCITY = -400.0
 
 @export var ground_state : GroundState
 @export var attack_state : AttackState
+@export var jump_sound : AudioStreamPlayer2D
 
 var has_double_jump : bool = false
 
@@ -25,6 +26,7 @@ func on_exit():
 		has_double_jump = false
 
 func double_jump():
+	jump_sound.play()
 	player.velocity.y = DOUBLE_JUMP_VELOCITY
 	has_double_jump = true
 	playback.travel("double jump")

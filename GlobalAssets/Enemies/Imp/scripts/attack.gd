@@ -4,7 +4,7 @@ class_name ImpAttack
 
 @export var imp : Imp
 
-@export var damage : int = 2
+@export var damage : int = 4
 
 func _ready():
 	imp.connect("facing_direction_change", change_attack_boxes)

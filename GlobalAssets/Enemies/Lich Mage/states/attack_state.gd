@@ -42,24 +42,34 @@ func _on_animation_tree_animation_finished(_anim_name):
 		return
 		
 	else:
+		attack_timer.start()
 		attack_animation = (attack_animation + 1) % 2
 	
 
 func attack():
 	match attack_animation:
 		0:
-			playback.travel("attack_2")
-		1:
 			playback.travel("attack_1")
-	
-	attack_timer.start()
+		1:
+			playback.travel("attack_2")
+
 
 func get_direction():
 	if !is_instance_valid(attacking_character) :
-		emit_signal("interrupt_state", idle_state)
+		emit_signal("interrupt_state", chasing_state)
 		return Vector2.ZERO
 	var direction = ((attacking_character.position - player.position).normalized())
 	if (direction.x > 0 ):
 		return Vector2.RIGHT
 	else:
 		return Vector2.LEFT
+
+
+func _on_attack_timer_timeout():
+	if !near_player :
+		next_state = chasing_state
+		playback.travel("idle and move")
+		return
+		
+	else:
+		attack()

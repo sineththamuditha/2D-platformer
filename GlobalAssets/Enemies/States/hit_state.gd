@@ -4,7 +4,7 @@ class_name HitState
 
 @export var damageable : Damageable
 @export var death_state : DeathState 
-@export var knockback : float = 50.0
+@export var knockback : float = 20.0
 
 @export var ground_state : State
 @export var chase_state : State
@@ -36,4 +36,4 @@ func on_exit():
 
 func _on_hit_timer_timeout():
 	next_state = previous_state
-	playback.travel("idle and move")
+	#playback.travel("idle and move")

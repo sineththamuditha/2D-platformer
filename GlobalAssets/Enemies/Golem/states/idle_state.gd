@@ -8,4 +8,4 @@ func _ready():
 	
 func chase_player(_player : Player):
 	next_state = chasing_state
-	chasing_state.chasing_character = player
+	chasing_state.chasing_character = _player

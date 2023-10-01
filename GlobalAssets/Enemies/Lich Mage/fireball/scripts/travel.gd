@@ -22,10 +22,7 @@ func _physics_process(delta):
 func _on_fireball_collision_body_entered(body):
 	for child in body.get_children():
 		if child is PlayerDamageable :
-			
-			
-			
-			child.take_damage(10, Vector2.ZERO)
+			child.take_damage(8, Vector2.ZERO)
 	
 	queue_free()
 

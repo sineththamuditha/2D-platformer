@@ -1,0 +1,55 @@
+{
+	"dialogues" : {
+		"1" : [
+			"What is this ? Whole town is overun with monsters. I must eliminate them",
+			"Monsters seems to spawning from this well. I must explore",
+			""
+		],
+		"2" : [
+			"An underground dungeon. Who knows what lies ahead. I must be vigilant",
+			"Ah an ambush!!!",
+			"They were guarding this door. I should investigate"
+		],
+		"3" : [
+			"So this place is the cause for all this. I must eliminate their leader",
+			"Ughhh!!! Who is this omnious creature?",
+			"Finally!!! Village will be free"
+		]
+	},
+	"instructions" : {
+		"1" : {
+			"description" : "You arrive at your home village and found that it is overruned by monsters. No human presence can be seen. What does this mean?",
+			"objectives" : [
+				"Kill all monsters",
+				"Find out the source of this disaster"
+			],
+			"notes" : [
+				"There are no checkpoints in this level",
+				"There may be regions after passing you cannot come back"
+			]
+		},
+		"2" : {
+			"description" : "You found a dungeon beneath the well and it seems monsters are spawning from within. What will I find here ?",
+			"objectives" : [
+				"Kill all monsters",
+				"Find what lies at the end of the dungeon"
+			],
+			"notes" : [
+				"If you fall, you will loose health",
+				"There may be regions after passing you cannot come back",
+				"Lookout for any surprises"
+			]
+		},
+		"3" : {
+			"description" : "It seems monsters are from another dimension. May be killing their leader will stop this madness",
+			"objectives" : [
+				"Find enemy leader and kill him"
+			],
+			"notes" : [
+				"Always use the higher ground",
+				"Missing some platforms will cost you potions",
+				"Some enemies will try to push you from platforms"
+			]
+		}
+	}
+}

@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwswk77w0dfg"]
+
+[ext_resource type="Script" path="res://Scene_between/game_over_scene.gd" id="1_2o3jl"]
+[ext_resource type="FontFile" uid="uid://ckp3r3ftkl4gf" path="res://GlobalAssets/UI/Font/PixelifySans-VariableFont_wght.ttf" id="1_dy6pe"]
+[ext_resource type="PackedScene" uid="uid://clmb0ohvfxrc5" path="res://Scene_between/background.tscn" id="3_1cerx"]
+
+[node name="game_over_scene" type="Node2D"]
+script = ExtResource("1_2o3jl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="try_again_btn" type="Button" parent="CanvasLayer"]
+offset_left = 699.0
+offset_top = 563.0
+offset_right = 1420.0
+offset_bottom = 704.0
+theme_override_fonts/font = ExtResource("1_dy6pe")
+theme_override_font_sizes/font_size = 60
+text = "Try Again"
+
+[node name="quit_btn" type="Button" parent="CanvasLayer"]
+offset_left = 692.0
+offset_top = 759.0
+offset_right = 1413.0
+offset_bottom = 900.0
+theme_override_fonts/font = ExtResource("1_dy6pe")
+theme_override_font_sizes/font_size = 60
+text = "Quit"
+
+[node name="main texts" type="Node" parent="CanvasLayer"]
+
+[node name="game_over_text" type="Label" parent="CanvasLayer/main texts"]
+offset_left = 346.0
+offset_top = 276.0
+offset_right = 1695.0
+offset_bottom = 476.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 6
+theme_override_constants/shadow_offset_y = 6
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("1_dy6pe")
+theme_override_font_sizes/font_size = 150
+text = "Your Journey Ends"
+horizontal_alignment = 1
+
+[node name="game_over_scene_timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="background" parent="." instance=ExtResource("3_1cerx")]
+
+[connection signal="pressed" from="CanvasLayer/try_again_btn" to="." method="_on_try_again_btn_pressed"]
+[connection signal="pressed" from="CanvasLayer/quit_btn" to="." method="_on_quit_btn_pressed"]
+[connection signal="timeout" from="game_over_scene_timer" to="." method="_on_game_over_scene_timer_timeout"]

@@ -7,6 +7,8 @@ class_name GroundState
 @export var attack_state : AttackState
 @export var crouch_state : CrouchState
 @export var death_state : PlayerDeadState
+@export var jump_sound : AudioStreamPlayer2D
+@export var hurt_sound : AudioStreamPlayer2D
 @onready var ground_timer : Timer = $ground_timer
 
 func _ready():
@@ -17,6 +19,9 @@ func state_process(_delta):
 		next_state = air_state 
 
 func state_input(event : InputEvent):
+	if player.conversing :
+		return
+	
 	if (event.is_action_pressed("jump")):
 		jump()
 		
@@ -32,6 +37,7 @@ func on_enter():
 func jump():
 	player.velocity.y = JUMP_VELOCITY
 	next_state = air_state
+	jump_sound.play()
 	playback.travel("jump")
 	
 func attack():
@@ -45,8 +51,9 @@ func crouch():
 
 func get_hit(_player : Node, _damage : int, _direction : Vector2):
 	if damageable.health > 0 :
-		pass
+		hurt_sound.play()
 		
 	else:
 		next_state = death_state
 		playback.travel("death")
+		

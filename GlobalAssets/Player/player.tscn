@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=3 uid="uid://cwfxasetk3hbq"]
+[gd_scene load_steps=190 format=3 uid="uid://cwfxasetk3hbq"]
 
 [ext_resource type="Script" path="res://GlobalAssets/Player/player.gd" id="1_fqa1t"]
 [ext_resource type="Texture2D" uid="uid://cqs2setggsteu" path="res://GlobalAssets/Player/animations/idle.png" id="1_ybm01"]
@@ -26,6 +26,10 @@
 [ext_resource type="Script" path="res://GlobalAssets/Player/scripts/death_state.gd" id="21_nfpas"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/scripts/collectible_ detection.gd" id="25_nh72a"]
 [ext_resource type="Script" path="res://GlobalAssets/Player/scripts/potion_count.gd" id="27_n4wse"]
+[ext_resource type="AudioStream" uid="uid://b8lf4483dxta0" path="res://GlobalAssets/Player/sounds/jump.ogg" id="27_s1hlq"]
+[ext_resource type="AudioStream" uid="uid://c0pwiam3yet1w" path="res://GlobalAssets/Player/sounds/attack.wav" id="28_t8acw"]
+[ext_resource type="AudioStream" uid="uid://cb8g8y0clamhb" path="res://GlobalAssets/Player/sounds/hurt.ogg" id="29_6c1em"]
+[ext_resource type="AudioStream" uid="uid://cv5pvr4de3ey4" path="res://GlobalAssets/Player/sounds/death.ogg" id="30_mcss1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r27ry"]
 atlas = ExtResource("2_3edu8")
@@ -1727,7 +1731,7 @@ states/death/position = Vector2(697.65, 101.377)
 states/jump/node = SubResource("AnimationNodeAnimation_sdhly")
 states/jump/position = Vector2(360.488, 118.433)
 transitions = ["attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_3alf8"), "attack_2", "attack_3", SubResource("AnimationNodeStateMachineTransition_kode7"), "attack_3", "attack_4", SubResource("AnimationNodeStateMachineTransition_wvngi"), "jump", "attack_from_air", SubResource("AnimationNodeStateMachineTransition_bayhw"), "attack_from_air", "attack_from_air_end", SubResource("AnimationNodeStateMachineTransition_s8ylv"), "jump", "double jump", SubResource("AnimationNodeStateMachineTransition_uvdhf"), "double jump", "attack_from_air", SubResource("AnimationNodeStateMachineTransition_08ih5"), "Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_s3stl"), "jump", "idle and move", SubResource("AnimationNodeStateMachineTransition_icfvu"), "idle and move", "jump", SubResource("AnimationNodeStateMachineTransition_csy4m"), "double jump", "idle and move", SubResource("AnimationNodeStateMachineTransition_dr57j"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_eg71e"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_x3r8u"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_v4txr"), "attack_3", "idle and move", SubResource("AnimationNodeStateMachineTransition_1018c"), "attack_4", "idle and move", SubResource("AnimationNodeStateMachineTransition_0mjcj"), "attack_from_air_end", "idle and move", SubResource("AnimationNodeStateMachineTransition_1qn8c"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_xqb36"), "crouch_attack_1", "crouch_attack_2", SubResource("AnimationNodeStateMachineTransition_17l0v"), "idle and move", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_xolk5"), "crouch_idle", "idle and move", SubResource("AnimationNodeStateMachineTransition_g1kq3"), "crouch_idle", "crouch_attack_1", SubResource("AnimationNodeStateMachineTransition_x2ljp"), "crouch_attack_1", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_cj6vb"), "crouch_attack_2", "crouch_idle", SubResource("AnimationNodeStateMachineTransition_w1l52")]
-graph_offset = Vector2(209.355, 97.0285)
+graph_offset = Vector2(161.145, -69.7113)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l1jw"]
 radius = 16.5
@@ -1765,15 +1769,6 @@ radius = 26.1725
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pk1kd"]
 radius = 25.0
 height = 96.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_oe2tr"]
-line_spacing = 1.0
-font_color = Color(0, 0.0117647, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_4jjqr"]
-line_spacing = 2.0
-font_size = 8
-font_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("crouch_state")]
 z_index = 1
@@ -1901,26 +1896,31 @@ player = NodePath("..")
 animation_tree = NodePath("../animation_tree")
 current_state = NodePath("ground")
 
-[node name="ground" type="Node" parent="player_state_machine" node_paths=PackedStringArray("damageable", "air_state", "attack_state", "crouch_state")]
+[node name="ground" type="Node" parent="player_state_machine" node_paths=PackedStringArray("damageable", "air_state", "attack_state", "crouch_state", "death_state", "jump_sound", "hurt_sound")]
 script = ExtResource("14_mmer7")
 damageable = NodePath("../../player_damageable")
 air_state = NodePath("../air")
 attack_state = NodePath("../attack")
 crouch_state = NodePath("../crouch")
+death_state = NodePath("../death")
+jump_sound = NodePath("../../jump_audio")
+hurt_sound = NodePath("../../hurt_audio")
 
 [node name="ground_timer" type="Timer" parent="player_state_machine/ground"]
 wait_time = 0.1
 one_shot = true
 
-[node name="air" type="Node" parent="player_state_machine" node_paths=PackedStringArray("ground_state", "attack_state")]
+[node name="air" type="Node" parent="player_state_machine" node_paths=PackedStringArray("ground_state", "attack_state", "jump_sound")]
 script = ExtResource("15_grt7i")
 ground_state = NodePath("../ground")
 attack_state = NodePath("../attack")
+jump_sound = NodePath("../../jump_audio")
 
-[node name="attack" type="Node" parent="player_state_machine" node_paths=PackedStringArray("ground_state", "crouch_state")]
+[node name="attack" type="Node" parent="player_state_machine" node_paths=PackedStringArray("ground_state", "crouch_state", "attack_sound")]
 script = ExtResource("16_4xbgn")
 ground_state = NodePath("../ground")
 crouch_state = NodePath("../crouch")
+attack_sound = NodePath("../../attack_audio")
 can_move = false
 
 [node name="attack_timer" type="Timer" parent="player_state_machine/attack"]
@@ -1939,8 +1939,9 @@ one_shot = true
 [node name="hurt" type="Node" parent="player_state_machine"]
 script = ExtResource("20_yhgqx")
 
-[node name="death" type="Node" parent="player_state_machine"]
+[node name="death" type="Node" parent="player_state_machine" node_paths=PackedStringArray("death_sound")]
 script = ExtResource("21_nfpas")
+death_sound = NodePath("../../death_sound")
 
 [node name="player_damageable" type="Node" parent="."]
 script = ExtResource("21_4f5m2")
@@ -1968,7 +1969,8 @@ script = ExtResource("19_dpjks")
 state_machine = NodePath("../player_state_machine")
 player_damageable = NodePath("../player_damageable")
 
-[node name="potion_count" type="Label" parent="." node_paths=PackedStringArray("potion_detection_area")]
+[node name="potion_counter" type="Label" parent="." node_paths=PackedStringArray("potion_detection_area")]
+visible = false
 offset_left = -46.0
 offset_top = -54.0
 offset_right = 25.0
@@ -1977,37 +1979,17 @@ text = "Potions : "
 script = ExtResource("27_n4wse")
 potion_detection_area = NodePath("../collectible_detection")
 
-[node name="dialog_box" type="Control" parent="."]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-offset_left = 25.0
-offset_right = 454.0
-offset_bottom = 67.0
+[node name="jump_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_s1hlq")
 
-[node name="box" type="ColorRect" parent="dialog_box"]
-layout_mode = 0
-offset_left = 1.0
-offset_right = 381.0
-offset_bottom = 66.0
+[node name="attack_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("28_t8acw")
 
-[node name="name" type="Label" parent="dialog_box/box"]
-layout_mode = 0
-offset_left = 1.0
-offset_right = 52.0
-offset_bottom = 15.0
-text = "Arknight :"
-label_settings = SubResource("LabelSettings_oe2tr")
+[node name="hurt_audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("29_6c1em")
 
-[node name="Label" type="Label" parent="dialog_box/box"]
-layout_mode = 0
-offset_left = 3.0
-offset_top = 23.0
-offset_right = 377.0
-offset_bottom = 51.0
-text = "faw fawfafawfawfa faf afaf af waf a fa fa  afagawfaf
-waagawgaga"
-label_settings = SubResource("LabelSettings_4jjqr")
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("30_mcss1")
 
 [connection signal="animation_finished" from="animation_tree" to="player_state_machine/attack" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="player_state_machine/crouch" method="_on_animation_tree_animation_finished"]

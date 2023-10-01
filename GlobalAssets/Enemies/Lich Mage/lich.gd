@@ -24,6 +24,9 @@ func _ready():
 	damageable.connect("on_hit", get_hit)
 
 func _physics_process(delta):
+	
+	if position.y > 1000:
+		queue_free()
 
 	if not is_on_floor():
 		velocity.y += gravity * delta

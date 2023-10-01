@@ -1,30 +1,56 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfwnusn6ankv8"]
+[gd_scene load_steps=5 format=3 uid="uid://bfwnusn6ankv8"]
 
 [ext_resource type="Script" path="res://Main/main.gd" id="1_2rxo4"]
 [ext_resource type="PackedScene" uid="uid://sargdov6pvy8" path="res://Main/Background/main_menu_ground.tscn" id="2_wxckk"]
+[ext_resource type="FontFile" uid="uid://ckp3r3ftkl4gf" path="res://GlobalAssets/UI/Font/PixelifySans-VariableFont_wght.ttf" id="3_o33db"]
+[ext_resource type="AudioStream" uid="uid://dqv44x6eqh4cg" path="res://Main/main_sound.ogg" id="4_ao6bx"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_2rxo4")
 
 [node name="Play" type="Button" parent="."]
-offset_left = 762.0
-offset_top = 498.0
-offset_right = 1231.0
-offset_bottom = 600.0
+offset_left = 709.0
+offset_top = 537.0
+offset_right = 1298.0
+offset_bottom = 678.0
 tooltip_text = "Play "
+theme_override_fonts/font = ExtResource("3_o33db")
+theme_override_font_sizes/font_size = 60
 text = "Play
 "
 
 [node name="Quit" type="Button" parent="."]
-offset_left = 760.0
-offset_top = 629.0
-offset_right = 1232.0
-offset_bottom = 723.0
+offset_left = 711.0
+offset_top = 715.0
+offset_right = 1294.0
+offset_bottom = 858.0
 tooltip_text = "Quit the game"
+theme_override_fonts/font = ExtResource("3_o33db")
+theme_override_font_sizes/font_size = 60
 text = "Quit
 "
 
 [node name="main_menu_ground" parent="." instance=ExtResource("2_wxckk")]
+
+[node name="game_name" type="Label" parent="."]
+offset_left = 281.0
+offset_top = 109.0
+offset_right = 1707.0
+offset_bottom = 475.0
+theme_override_colors/font_color = Color(0.643137, 0, 0.454902, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("3_o33db")
+theme_override_font_sizes/font_size = 150
+text = "Adventures of 
+Asmodeus"
+horizontal_alignment = 1
+
+[node name="main_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ao6bx")
 
 [connection signal="button_down" from="Play" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="Quit" to="." method="_on_quit_button_down"]

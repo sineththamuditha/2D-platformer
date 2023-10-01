@@ -22,10 +22,13 @@ func _ready():
 
 func _physics_process(delta):
 	
+	if position.y > 1000:
+		queue_free()
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	if imp_state_machine.current_state is ChasingState:
+	if imp_state_machine.current_state is ChasingState or imp_state_machine.current_state is ImpAttackState:
 		direction = imp_state_machine.current_state.get_direction()
 	else:
 		direction = Vector2.ZERO

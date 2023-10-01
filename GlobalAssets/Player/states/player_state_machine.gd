@@ -16,7 +16,6 @@ func _ready():
 			child.player = player
 			child.playback = animation_tree["parameters/playback"]
 			
-			
 			child.connect("interrupt_state", handle_interrupt)
 			
 		else:
@@ -32,11 +31,15 @@ func can_move():
 	return current_state.can_move
 
 func switch_states(next_state : State):
+	if current_state.is_final():
+		return
+		
 	if (current_state != null):
 		current_state.on_exit()
 		current_state.next_state = null
 		next_state.previous_state = current_state
 	
+	print(name + " goes to " + next_state.name + " from " + current_state.name)
 	current_state = next_state
 	
 	current_state.on_enter()
@@ -45,4 +48,5 @@ func _input(event : InputEvent):
 	current_state.state_input(event)
 
 func handle_interrupt(new_state : State):
+	print("By interrupt from " + current_state.name)
 	switch_states(new_state)

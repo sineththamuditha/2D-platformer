@@ -2,7 +2,7 @@ extends Area2D
 
 class_name SpiderAttack
 
-@export var damage : int = 3
+@export var damage : int = 2
 
 @onready var spider : Spider = get_parent()
 

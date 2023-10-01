@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Signals="*res://GlobalAssets/Scripts/signals.gd"
 Global="*res://Global/global.gd"
+TextManager="*res://Global/text_manager.gd"
 
 [display]
 

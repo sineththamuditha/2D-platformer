@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 class_name Ghoul
 
-const SPEED = 100.0
+const SPEED = 50.0
 const JUMP_VELOCITY = -400.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -21,10 +21,13 @@ func _ready():
 
 func _physics_process(delta):
 	
+	if position.y > 1000:
+		queue_free()
+	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
-	if ghoul_state_machine.current_state is ChasingState :
+	if ghoul_state_machine.current_state is ChasingState or ghoul_state_machine.current_state is AttackStateGhoul:
 		direction =  ghoul_state_machine.current_state.get_direction()
 	else:
 		direction = Vector2.ZERO

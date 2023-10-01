@@ -1,5 +1,231 @@
-[gd_scene format=3 uid="uid://dm7mjnnexjdsa"]
+[gd_scene load_steps=21 format=3 uid="uid://ce26x5doakaka"]
 
-[node name="GUI" type="MarginContainer"]
-offset_right = 40.0
-offset_bottom = 40.0
+[ext_resource type="Script" path="res://GlobalAssets/UI/GUI/gui.gd" id="1_nttkk"]
+[ext_resource type="Texture2D" uid="uid://bkr3ofdsyj8d8" path="res://GlobalAssets/UI/health_potion_counter/background.png" id="2_yl6f3"]
+[ext_resource type="FontFile" uid="uid://cb3rr72u2y2h" path="res://GlobalAssets/UI/Font/Onest-VariableFont_wght.ttf" id="3_om55a"]
+[ext_resource type="Texture2D" uid="uid://kiggsbxp2ud5" path="res://GlobalAssets/Collectibles/Health Potion/health_potion.png" id="4_fnrh8"]
+[ext_resource type="Texture2D" uid="uid://b16gn7a0kucoj" path="res://GlobalAssets/UI/Textboxes/Fantasy_TextBox_A01-1_Green.png" id="5_fi3g4"]
+[ext_resource type="Texture2D" uid="uid://bfnfyx0i2uw66" path="res://GlobalAssets/UI/Textboxes/Fantasy_TextBox_A01-1_Orange.png" id="6_odtxf"]
+[ext_resource type="Texture2D" uid="uid://c7c7wavdpfpdp" path="res://GlobalAssets/UI/Textboxes/Fantasy_TextBox_A01-1_Purple.png" id="7_8rgmp"]
+[ext_resource type="Texture2D" uid="uid://btgdub6pwnqrm" path="res://Global/mission_info_background.png" id="8_5fd28"]
+
+[sub_resource type="Theme" id="Theme_plt1l"]
+default_font = ExtResource("3_om55a")
+default_font_size = 40
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08t1k"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djxn2"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnvjg"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08c2s"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tpdbe"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1m2tk"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i1go0"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g6ip"]
+atlas = ExtResource("4_fnrh8")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yj2k2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08t1k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djxn2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qnvjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08c2s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tpdbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1m2tk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i1go0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g6ip")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Theme" id="Theme_gad37"]
+
+[sub_resource type="Theme" id="Theme_ygpc7"]
+
+[node name="GUI" type="CanvasLayer"]
+script = ExtResource("1_nttkk")
+
+[node name="Potions" type="Node" parent="."]
+
+[node name="background" type="Sprite2D" parent="Potions"]
+position = Vector2(155, 76)
+scale = Vector2(1.15, 1.43478)
+texture = ExtResource("2_yl6f3")
+
+[node name="count" type="Label" parent="Potions"]
+offset_left = 158.0
+offset_top = 44.0
+offset_right = 198.0
+offset_bottom = 107.0
+theme = SubResource("Theme_plt1l")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="potion_sprite" type="AnimatedSprite2D" parent="Potions"]
+position = Vector2(89.0001, 73)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_yj2k2")
+autoplay = "default"
+
+[node name="text_box_player" type="Node" parent="."]
+
+[node name="green" type="Sprite2D" parent="text_box_player"]
+visible = false
+position = Vector2(1011, 171.5)
+texture = ExtResource("5_fi3g4")
+
+[node name="orange" type="Sprite2D" parent="text_box_player"]
+visible = false
+position = Vector2(1011, 171.5)
+texture = ExtResource("6_odtxf")
+
+[node name="purple" type="Sprite2D" parent="text_box_player"]
+visible = false
+position = Vector2(1011, 171.5)
+texture = ExtResource("7_8rgmp")
+
+[node name="player_name" type="Label" parent="text_box_player"]
+visible = false
+offset_left = 493.0
+offset_top = 131.0
+offset_right = 603.0
+offset_bottom = 168.0
+theme = SubResource("Theme_gad37")
+theme_override_colors/font_color = Color(0, 0, 0, 0.996078)
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 26
+text = "Asmodes"
+
+[node name="dialog" type="Label" parent="text_box_player"]
+visible = false
+offset_left = 671.0
+offset_top = 102.0
+offset_right = 1519.0
+offset_bottom = 231.0
+theme = SubResource("Theme_ygpc7")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 30
+text = "Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something Something "
+autowrap_mode = 3
+text_overrun_behavior = 2
+
+[node name="mission_details" type="Node" parent="."]
+
+[node name="MissionInfoBackground" type="Sprite2D" parent="mission_details"]
+visible = false
+modulate = Color(0.392157, 0.392157, 0.392157, 0.784314)
+position = Vector2(997, 526)
+scale = Vector2(0.344982, 0.278355)
+texture = ExtResource("8_5fd28")
+
+[node name="description" type="Label" parent="mission_details"]
+visible = false
+offset_left = 477.0
+offset_top = 236.0
+offset_right = 1459.0
+offset_bottom = 366.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 30
+text = "You arrive at your home village and found that it is overruned by monsters. No human presence can be seen. What does this mean?"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="objective_title" type="Label" parent="mission_details"]
+visible = false
+offset_left = 542.0
+offset_top = 341.0
+offset_right = 791.0
+offset_bottom = 409.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 40
+text = "Objectives"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="objectives" type="Label" parent="mission_details"]
+visible = false
+offset_left = 520.0
+offset_top = 430.0
+offset_right = 1453.0
+offset_bottom = 537.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 30
+text = "1. Kill all monsters
+2. Find what lies at the end of the dungeon"
+autowrap_mode = 3
+
+[node name="notes_title" type="Label" parent="mission_details"]
+visible = false
+offset_left = 577.0
+offset_top = 582.0
+offset_right = 690.0
+offset_bottom = 637.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 40
+text = "Notes
+"
+
+[node name="notes" type="Label" parent="mission_details"]
+visible = false
+offset_left = 525.0
+offset_top = 655.0
+offset_right = 1427.0
+offset_bottom = 784.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("3_om55a")
+theme_override_font_sizes/font_size = 30
+text = "- Always use the higher ground
+- Missing some platforms will cost you potions
+- Some enemies will try to push you from platforms"
+autowrap_mode = 3

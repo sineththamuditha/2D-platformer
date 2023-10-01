@@ -4,10 +4,12 @@ class_name AttackState
 
 @export var ground_state : State
 @export var crouch_state : State
+@export var attack_sound : AudioStreamPlayer2D
 
 @onready var attack_timer : Timer = $attack_timer
 
 var on_air : bool = false
+var air_attack_sound : bool = false
 
 # enum to ckeck the attack chain
 enum ATTACKCHAIN {
@@ -23,6 +25,9 @@ var attack_chain : ATTACKCHAIN
 
 func state_process(_delta):
 	if on_air and player.is_on_floor():
+		if !air_attack_sound:
+			air_attack_sound = true
+			attack_sound.play()
 		playback.travel("attack_from_air_end")
 
 func state_input(event : InputEvent):
@@ -58,9 +63,15 @@ func on_exit():
 	else:
 		playback.travel("idle and move")
 	on_air = false
+	air_attack_sound = false
 	attack_timer.stop()
+	
+func on_enter() :
+	if attack_chain != ATTACKCHAIN.AIR_ATTACK:
+		attack_sound.play()
 
 func attack():
+	attack_sound.play()
 	attack_timer.stop()
 	match attack_chain:
 		ATTACKCHAIN.ATTACK_1:

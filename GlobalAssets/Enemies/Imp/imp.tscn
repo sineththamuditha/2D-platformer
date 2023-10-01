@@ -1,4 +1,4 @@
-[gd_scene load_steps=130 format=3 uid="uid://dfu87n5qkypu0"]
+[gd_scene load_steps=131 format=3 uid="uid://dfu87n5qkypu0"]
 
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Imp/scripts/imp.gd" id="1_38f7w"]
 [ext_resource type="Texture2D" uid="uid://bctiboeabbctt" path="res://GlobalAssets/Enemies/Imp/animations/idle.png" id="1_b37i1"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/States/hit_state.gd" id="14_6owkl"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/States/dead_state.gd" id="15_hgsk1"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Imp/states/attack_state.gd" id="16_2yko5"]
+[ext_resource type="AudioStream" uid="uid://cv5pvr4de3ey4" path="res://GlobalAssets/Player/sounds/death.ogg" id="19_alj6v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kxios"]
 atlas = ExtResource("2_0f21h")
@@ -999,7 +1000,7 @@ anim_player = NodePath("../imp_animation_player")
 
 [node name="Damageable" type="Node" parent="."]
 script = ExtResource("4_r5deq")
-health = 8
+health = 10
 
 [node name="damage_timer" type="Timer" parent="Damageable"]
 wait_time = 2.0
@@ -1072,11 +1073,11 @@ ground_state = NodePath("../idle_state")
 chase_state = NodePath("../chasing_state")
 
 [node name="hit_timer" type="Timer" parent="imp_state_machine/hit_state"]
-wait_time = 0.5
 one_shot = true
 
-[node name="dead_state" type="Node" parent="imp_state_machine"]
+[node name="dead_state" type="Node" parent="imp_state_machine" node_paths=PackedStringArray("death_sound")]
 script = ExtResource("15_hgsk1")
+death_sound = NodePath("../../death_sound")
 can_move = false
 
 [node name="attack_state" type="Node" parent="imp_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection", "detection_area")]
@@ -1088,6 +1089,9 @@ can_move = false
 
 [node name="attack_timer" type="Timer" parent="imp_state_machine/attack_state"]
 one_shot = true
+
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_alj6v")
 
 [connection signal="animation_finished" from="animation_tree" to="Damageable" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="imp_state_machine/attack_state" method="_on_animation_tree_animation_finished"]

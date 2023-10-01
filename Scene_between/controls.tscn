@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://bym1db1wln4b6"]
+
+[ext_resource type="Texture2D" uid="uid://btgdub6pwnqrm" path="res://Global/mission_info_background.png" id="1_8tavi"]
+[ext_resource type="Script" path="res://Scene_between/controls.gd" id="1_w0s5u"]
+[ext_resource type="FontFile" uid="uid://cb3rr72u2y2h" path="res://GlobalAssets/UI/Font/Onest-VariableFont_wght.ttf" id="2_pje0h"]
+[ext_resource type="FontFile" uid="uid://ckp3r3ftkl4gf" path="res://GlobalAssets/UI/Font/PixelifySans-VariableFont_wght.ttf" id="3_3kcgo"]
+
+[node name="controls" type="Node2D"]
+script = ExtResource("1_w0s5u")
+
+[node name="MissionInfoBackground" type="Sprite2D" parent="."]
+modulate = Color(0.784314, 0.784314, 0.784314, 0.784314)
+position = Vector2(1121, 640)
+texture = ExtResource("1_8tavi")
+
+[node name="controls" type="Label" parent="."]
+offset_left = 29.0
+offset_top = 31.0
+offset_right = 2060.0
+offset_bottom = 871.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_pje0h")
+theme_override_font_sizes/font_size = 80
+text = "A, D - move left and right
+W, space - jump
+S - crouch (you cannot move in crouch mode, press jump to stand up)
+H - heal
+N - skip dialogues and proceed to next level"
+autowrap_mode = 3
+
+[node name="Button" type="Button" parent="."]
+offset_left = 835.0
+offset_top = 671.0
+offset_right = 1890.0
+offset_bottom = 1008.0
+theme_override_fonts/font = ExtResource("3_3kcgo")
+theme_override_font_sizes/font_size = 150
+text = "Continue
+"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

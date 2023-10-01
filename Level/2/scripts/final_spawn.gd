@@ -4,14 +4,22 @@ extends Area2D
 @export var ghoul : PackedScene
 @export var spider : PackedScene
 @export var enemies : Node
+@export var scene : Node
 
 @onready var triggered : bool = false
 @onready var spawning_rounds : int = 3
 @onready var spawned_enemies : Array = []
 
+@onready var dialogue_happened : bool = false
+
 var player : Player
 
 func _process(_delta) -> void :
+	
+	if dialogue_happened and !triggered and Input.is_action_pressed("next"):
+		triggered = true
+		spawn_and_position_enemies( spider, "spider")
+		return
 	
 	if spawning_rounds == 0 :
 		queue_free()
@@ -29,13 +37,15 @@ func _process(_delta) -> void :
 		spawned_enemies.pop_front()
 
 func _on_body_entered(body):
+	if !dialogue_happened :
+		dialogue_happened = true
+		scene.show_dialogue()
+		player = body
+		return
+	
 	if triggered :
 		return
 		
-	if body is Player :
-		triggered = true
-		player = body
-		spawn_and_position_enemies( spider, "spider")
 
 func spawn_and_position_enemies(enemy_type : PackedScene, enemy_name : String) -> void :
 	

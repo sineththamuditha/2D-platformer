@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://clmb0ohvfxrc5"]
+
+[ext_resource type="Texture2D" uid="uid://duh2onciy672p" path="res://Scene_between/parallax-mountain-bg.png" id="1_3dm8p"]
+[ext_resource type="Script" path="res://Scene_between/background.gd" id="1_m1jv5"]
+[ext_resource type="Texture2D" uid="uid://1s3lhqov0dxj" path="res://Scene_between/parallax-mountain-mountains.png" id="2_ekky2"]
+
+[node name="background" type="ParallaxBackground"]
+script = ExtResource("1_m1jv5")
+
+[node name="Parallax-mountain-bg" type="Sprite2D" parent="."]
+position = Vector2(1090, 645)
+scale = Vector2(8, 8)
+texture = ExtResource("1_3dm8p")
+
+[node name="mountain_background" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(1000, 2.08165e-12)
+
+[node name="Parallax-mountain-mountains" type="Sprite2D" parent="mountain_background"]
+position = Vector2(1094, 975)
+scale = Vector2(4, 4)
+texture = ExtResource("2_ekky2")

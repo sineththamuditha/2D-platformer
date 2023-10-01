@@ -8,6 +8,9 @@ func _ready():
 func take_damage(damage : int, direction : Vector2):
 	health -= damage
 	
+	if health > 100 :
+		health = 100
+	
 	Global.set_player_health(health)
 	
 	emit_signal("on_hit",get_parent(), damage, direction)

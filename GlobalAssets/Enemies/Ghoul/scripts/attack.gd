@@ -2,7 +2,7 @@ extends Area2D
 
 @export var ghoul : Ghoul
 
-@export var damage : int = 4
+@export var damage : int = 5
 
 func _ready():
 	ghoul.connect("facing_direction_change", change_attack_boxes)

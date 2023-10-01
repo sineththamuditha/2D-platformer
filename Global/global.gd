@@ -3,6 +3,7 @@ var current_scene = null
 
 var player_health : int
 var potion_count : int
+var current_level : int
 
 func _ready():
 	var root = get_tree().root
@@ -10,6 +11,7 @@ func _ready():
 	
 	player_health = 100
 	potion_count = 0
+	current_level = 1 
 	
 func goto_scene(path):
 	call_deferred("_deferred_goto_scene", path)
@@ -32,3 +34,6 @@ func set_player_health( amount : int ) :
 	
 func change_potion_count() :
 	potion_count += 1
+
+func consume_potion() :
+	potion_count -= 1

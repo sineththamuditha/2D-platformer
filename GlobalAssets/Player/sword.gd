@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var damage : int = 5
+@export var damage : int = 8
 @export var player : Player
 
 func _ready():

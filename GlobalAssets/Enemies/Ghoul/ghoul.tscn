@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=3 uid="uid://f3s7vqxwvxxg"]
+[gd_scene load_steps=135 format=3 uid="uid://f3s7vqxwvxxg"]
 
 [ext_resource type="Texture2D" uid="uid://dunxi4pfns17y" path="res://GlobalAssets/Enemies/Ghoul/animations/idle.png" id="1_5a3un"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Ghoul/scripts/ghoul.gd" id="1_i63bn"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/Ghoul/scripts/attack.gd" id="17_djg8g"]
 [ext_resource type="Script" path="res://GlobalAssets/Enemies/attack_detection.gd" id="17_dya4o"]
 [ext_resource type="Script" path="res://GlobalAssets/Scripts/flip_attack_boxes.gd" id="18_c5xvf"]
+[ext_resource type="AudioStream" uid="uid://cv5pvr4de3ey4" path="res://GlobalAssets/Player/sounds/death.ogg" id="20_261wu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_i1n5y"]
 atlas = ExtResource("2_yk2hy")
@@ -962,9 +963,11 @@ advance_mode = 2
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_u6m12"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_b01w1"]
-advance_mode = 0
+switch_mode = 2
+advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_eyxs5"]
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_oxt50"]
 
@@ -980,7 +983,7 @@ switch_mode = 2
 states/attack_1/node = SubResource("AnimationNodeAnimation_xqakj")
 states/attack_1/position = Vector2(307.895, 221.843)
 states/attack_2/node = SubResource("AnimationNodeAnimation_ak41h")
-states/attack_2/position = Vector2(473.895, 222.093)
+states/attack_2/position = Vector2(539.395, 232.093)
 states/death/node = SubResource("AnimationNodeAnimation_h0ga4")
 states/death/position = Vector2(675.4, 100.25)
 states/get_hit/node = SubResource("AnimationNodeAnimation_macmd")
@@ -988,7 +991,7 @@ states/get_hit/position = Vector2(390.75, -14.8025)
 "states/idle and move/node" = SubResource("AnimationNodeBlendSpace1D_kffci")
 "states/idle and move/position" = Vector2(389.5, 100.5)
 transitions = ["Start", "idle and move", SubResource("AnimationNodeStateMachineTransition_o8gwt"), "idle and move", "death", SubResource("AnimationNodeStateMachineTransition_3nrlw"), "idle and move", "get_hit", SubResource("AnimationNodeStateMachineTransition_u6m12"), "get_hit", "idle and move", SubResource("AnimationNodeStateMachineTransition_b01w1"), "attack_1", "idle and move", SubResource("AnimationNodeStateMachineTransition_eyxs5"), "attack_2", "idle and move", SubResource("AnimationNodeStateMachineTransition_oxt50"), "idle and move", "attack_1", SubResource("AnimationNodeStateMachineTransition_3raps"), "attack_1", "attack_2", SubResource("AnimationNodeStateMachineTransition_5e5bo"), "attack_2", "attack_1", SubResource("AnimationNodeStateMachineTransition_pvreq")]
-graph_offset = Vector2(141.525, 96.5027)
+graph_offset = Vector2(130.08, 32.2503)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1g3fd"]
 size = Vector2(546, 163.5)
@@ -1000,7 +1003,7 @@ radius = 33.0151
 radius = 34.9285
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcl2h"]
-size = Vector2(144, 155.5)
+size = Vector2(130, 155.5)
 
 [node name="ghoul" type="CharacterBody2D"]
 collision_layer = 4
@@ -1010,7 +1013,7 @@ script = ExtResource("1_i63bn")
 position = Vector2(9, -2)
 scale = Vector2(0.871094, 0.878906)
 sprite_frames = SubResource("SpriteFrames_mx7dw")
-animation = &"idle"
+animation = &"run"
 frame = 1
 metadata/_edit_lock_ = true
 
@@ -1027,7 +1030,7 @@ libraries = {
 [node name="animation_tree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_kh0ft")
 anim_player = NodePath("../animation_player")
-"parameters/idle and move/blend_position" = -0.998876
+"parameters/idle and move/blend_position" = -0.423771
 
 [node name="damagable" type="Node" parent="."]
 script = ExtResource("9_qr17e")
@@ -1048,14 +1051,15 @@ detection_area = NodePath("../../detection_area")
 chasing_state = NodePath("../chasing_state")
 can_move = false
 
-[node name="attack_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection")]
+[node name="attack_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("chasing_state", "attack_detection", "chasing_detection")]
 script = ExtResource("12_fn8k8")
 chasing_state = NodePath("../chasing_state")
 attack_detection = NodePath("../../attack_detection")
+chasing_detection = NodePath("../../detection_area")
 can_move = false
 
 [node name="attack_timer" type="Timer" parent="ghoul_state_machine/attack_state"]
-wait_time = 0.5
+wait_time = 1.5
 one_shot = true
 
 [node name="chasing_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("detection_area", "idle_state", "attack_state", "attack_detection")]
@@ -1065,24 +1069,25 @@ idle_state = NodePath("../idle_state")
 attack_state = NodePath("../attack_state")
 attack_detection = NodePath("../../attack_detection")
 
-[node name="dead_state" type="Node" parent="ghoul_state_machine"]
+[node name="dead_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("death_sound")]
 script = ExtResource("12_3ruvq")
+death_sound = NodePath("../../death_sound")
 can_move = false
 
-[node name="hit_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("damageable", "death_state", "ground_state")]
+[node name="hit_state" type="Node" parent="ghoul_state_machine" node_paths=PackedStringArray("damageable", "death_state", "ground_state", "chase_state")]
 script = ExtResource("13_3mbjr")
 damageable = NodePath("../../damagable")
 death_state = NodePath("../dead_state")
 ground_state = NodePath("../idle_state")
+chase_state = NodePath("../chasing_state")
 can_move = false
 
 [node name="hit_timer" type="Timer" parent="ghoul_state_machine/hit_state"]
-wait_time = 0.3
+wait_time = 0.5
 one_shot = true
 autostart = true
 
 [node name="detection_area" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("16_7bovn")
@@ -1112,18 +1117,21 @@ script = ExtResource("18_c5xvf")
 metadata/_edit_lock_ = true
 
 [node name="attack_detection" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 2
 script = ExtResource("17_dya4o")
 
 [node name="attack_area" type="CollisionShape2D" parent="attack_detection"]
-position = Vector2(1, -15.25)
+position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_xcl2h")
 metadata/_edit_lock_ = true
 
+[node name="death_sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_261wu")
+
 [connection signal="animation_finished" from="animation_tree" to="damagable" method="_on_animation_tree_animation_finished"]
 [connection signal="animation_finished" from="animation_tree" to="ghoul_state_machine/attack_state" method="_on_animation_tree_animation_finished"]
+[connection signal="timeout" from="ghoul_state_machine/attack_state/attack_timer" to="ghoul_state_machine/attack_state" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="ghoul_state_machine/hit_state/hit_timer" to="ghoul_state_machine/hit_state" method="_on_hit_timer_timeout"]
 [connection signal="body_entered" from="detection_area" to="detection_area" method="_on_body_entered"]
 [connection signal="body_exited" from="detection_area" to="detection_area" method="_on_body_exited"]

@@ -24,11 +24,13 @@ func _ready():
 	damageable.connect("on_hit", get_hit)
 
 func _physics_process(delta):
+	if position.y > 1000:
+		queue_free()
 	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	if golem_state_machine.current_state is ChasingState:
+	if golem_state_machine.current_state is ChasingState or golem_state_machine.current_state is GolemAttackState:
 		direction = golem_state_machine.current_state.get_direction()
 	else:
 		direction = Vector2.ZERO
